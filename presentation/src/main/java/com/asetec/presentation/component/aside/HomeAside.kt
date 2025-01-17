@@ -1,4 +1,4 @@
-package com.asetec.presentation.component
+package com.asetec.presentation.component.aside
 
 import android.annotation.SuppressLint
 import android.content.Context

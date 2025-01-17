@@ -67,4 +67,12 @@ class ActivityLocationViewModel @Inject constructor(
             )
         }
     }
+
+    fun setPedometerCount(count: Int) {
+        _activates.update {
+            it.copy(
+                pedometerCount = count
+            )
+        }
+    }
 }

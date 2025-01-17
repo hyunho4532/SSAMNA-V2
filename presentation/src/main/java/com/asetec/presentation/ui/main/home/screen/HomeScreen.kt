@@ -4,6 +4,7 @@ package com.asetec.presentation.ui.main.home.screen
 import android.Manifest
 import android.annotation.SuppressLint
 import android.content.Context
+import android.os.Build
 import androidx.compose.animation.animateContentSize
 import androidx.compose.animation.core.animateDpAsState
 import androidx.compose.foundation.background
@@ -32,8 +33,8 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.asetec.domain.model.user.User
-import com.asetec.presentation.component.HomeAside
-import com.asetec.presentation.component.TopBox
+import com.asetec.presentation.component.aside.HomeAside
+import com.asetec.presentation.component.box.TopBox
 import com.asetec.presentation.ui.tool.CircularProgress
 import com.asetec.presentation.viewmodel.ActivityLocationViewModel
 import com.google.accompanist.permissions.ExperimentalPermissionsApi
@@ -62,12 +63,17 @@ fun HomeScreen(
         mutableStateOf(false)
     }
 
-    val locationPermissionState = rememberMultiplePermissionsState(
-        permissions = listOf(
-            Manifest.permission.ACCESS_FINE_LOCATION,
-            Manifest.permission.ACCESS_COARSE_LOCATION
+    val locationPermissionState = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+        rememberMultiplePermissionsState(
+            permissions = listOf(
+                Manifest.permission.ACCESS_FINE_LOCATION,
+                Manifest.permission.ACCESS_COARSE_LOCATION,
+                Manifest.permission.ACTIVITY_RECOGNITION
+            )
         )
-    )
+    } else {
+        TODO("VERSION.SDK_INT < Q")
+    }
 
     var isPanelVisible by remember {
         mutableStateOf(false)
@@ -116,7 +122,7 @@ fun HomeScreen(
             }
 
             if (activates.activateButtonName == "측정 중!") {
-                TopBox()
+                TopBox(context)
             }
 
 

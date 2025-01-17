@@ -18,5 +18,6 @@ data class Activate(
     var activateButtonName: String = "측정하기!",
 
     /** 만보기 걸음 수 **/
+    var prevPedometerCount: Int = 0,
     var pedometerCount: Int = 0
 )
