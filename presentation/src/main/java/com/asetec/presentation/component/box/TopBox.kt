@@ -18,6 +18,7 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
@@ -25,20 +26,25 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
 import com.asetec.presentation.component.icon.Footprint
 import com.asetec.presentation.enum.ButtonType
+import com.asetec.presentation.service.SensorService
 import com.asetec.presentation.ui.tool.CustomButton
 import com.asetec.presentation.ui.tool.Spacer
+import com.asetec.presentation.viewmodel.ActivityLocationViewModel
 
 /**
  * 구글 지도에서 맨 위에 측정 중인 상태에서 걸음 수를 보여준다.
  */
 @Composable
-fun TopBox(context: Context) {
+fun TopBox(
+    context: Context,
+    activityLocationViewModel: ActivityLocationViewModel = hiltViewModel(),
+    sensorService: SensorService = SensorService(activityLocationViewModel)
+) {
 
-    val stepCount = remember {
-        mutableStateOf(0)
-    }
+    val activates = activityLocationViewModel.activates.collectAsState()
 
     val sensorManager = remember {
         context.getSystemService(Context.SENSOR_SERVICE) as SensorManager
@@ -47,17 +53,7 @@ fun TopBox(context: Context) {
     val stepDetector = sensorManager.getDefaultSensor(Sensor.TYPE_STEP_DETECTOR)
 
     DisposableEffect(Unit) {
-        val listener = object : SensorEventListener {
-            override fun onSensorChanged(event: SensorEvent?) {
-                event?.let {
-                    stepCount.value = it.values[0].toInt()
-                }
-            }
-
-            override fun onAccuracyChanged(p0: Sensor?, p1: Int) {
-
-            }
-        }
+        val listener = sensorService.sensorListener()
 
         stepDetector?.let {
             sensorManager.registerListener(listener, it, SensorManager.SENSOR_DELAY_UI)
@@ -100,7 +96,7 @@ fun TopBox(context: Context) {
             }
 
             Text(
-                text = "${stepCount.value} 걸음",
+                text = "${activates.value.pedometerCount} 걸음",
                 modifier = Modifier
                     .padding(top = 4.dp)
             )
