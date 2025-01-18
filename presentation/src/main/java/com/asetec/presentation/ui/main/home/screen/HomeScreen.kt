@@ -37,6 +37,7 @@ import com.asetec.presentation.component.aside.HomeAside
 import com.asetec.presentation.component.box.TopBox
 import com.asetec.presentation.ui.tool.CircularProgress
 import com.asetec.presentation.viewmodel.ActivityLocationViewModel
+import com.asetec.presentation.viewmodel.SensorManagerViewModel
 import com.google.accompanist.permissions.ExperimentalPermissionsApi
 import com.google.accompanist.permissions.rememberMultiplePermissionsState
 import com.google.android.gms.location.FusedLocationProviderClient
@@ -53,11 +54,12 @@ import com.google.maps.android.compose.rememberCameraPositionState
 fun HomeScreen(
     fusedLocationClient: FusedLocationProviderClient,
     activityLocationViewModel: ActivityLocationViewModel = hiltViewModel(),
+    sensorManagerViewModel: SensorManagerViewModel = hiltViewModel(),
     context: Context,
     userList: State<User>
 ) {
     val locationState = activityLocationViewModel.locations.collectAsState()
-    val activates by activityLocationViewModel.activates.collectAsState()
+    val activates by sensorManagerViewModel.activates.collectAsState()
 
     var isLocationLoaded by remember {
         mutableStateOf(false)

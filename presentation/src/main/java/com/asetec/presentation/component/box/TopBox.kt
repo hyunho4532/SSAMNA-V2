@@ -30,6 +30,7 @@ import com.asetec.data.service.SensorService
 import com.asetec.presentation.ui.tool.CustomButton
 import com.asetec.presentation.ui.tool.Spacer
 import com.asetec.presentation.viewmodel.ActivityLocationViewModel
+import com.asetec.presentation.viewmodel.SensorManagerViewModel
 
 /**
  * 구글 지도에서 맨 위에 측정 중인 상태에서 걸음 수를 보여준다.
@@ -37,10 +38,10 @@ import com.asetec.presentation.viewmodel.ActivityLocationViewModel
 @Composable
 fun TopBox(
     context: Context,
-    activityLocationViewModel: ActivityLocationViewModel = hiltViewModel()
+    sensorManagerViewModel: SensorManagerViewModel = hiltViewModel()
 ) {
 
-    val activates = activityLocationViewModel.activates.collectAsState()
+    val activates = sensorManagerViewModel.activates.collectAsState()
 
     val sensorManager = remember {
         context.getSystemService(Context.SENSOR_SERVICE) as SensorManager
@@ -49,7 +50,7 @@ fun TopBox(
     val stepDetector = sensorManager.getDefaultSensor(Sensor.TYPE_STEP_COUNTER)
 
     DisposableEffect(Unit) {
-        val listener = activityLocationViewModel.sensorEventListener()
+        val listener = sensorManagerViewModel.sensorEventListener()
 
         stepDetector?.let {
             sensorManager.registerListener(listener, it, SensorManager.SENSOR_DELAY_UI)

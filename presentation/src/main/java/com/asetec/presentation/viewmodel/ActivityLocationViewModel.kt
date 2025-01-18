@@ -17,9 +17,7 @@ import kotlinx.coroutines.flow.update
 import javax.inject.Inject
 
 @HiltViewModel
-class ActivityLocationViewModel @Inject constructor(
-    private val sensorCase: SensorCase
-): ViewModel() {
+class ActivityLocationViewModel @Inject constructor(): ViewModel() {
 
     private val _locations = MutableStateFlow(Location(
         latitude = 0.0,
@@ -57,38 +55,5 @@ class ActivityLocationViewModel @Inject constructor(
                 activateName = activateName
             )
         }
-    }
-
-    fun sensorEventListener(): SensorEventListener {
-        return sensorCase.sensorListener { stepCount ->
-            _activates.update {
-                it.copy(
-                    pedometerCount = stepCount
-                )
-            }
-        }
-    }
-
-    /**
-     * 클릭 이벤트 리스너
-     */
-    fun clickListener() {
-        _activates.update {
-            it.copy(
-                activateButtonName = "측정 중!"
-            )
-        }
-    }
-
-    fun setPedometerCount(count: Int) {
-        _activates.update {
-            it.copy(
-                pedometerCount = count
-            )
-        }
-    }
-
-    fun sensorListener() {
-
     }
 }

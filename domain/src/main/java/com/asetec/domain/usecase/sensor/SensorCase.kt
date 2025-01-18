@@ -12,11 +12,4 @@ class SensorCase @Inject constructor(
 
     fun invoke() {
     }
-
-    fun sensorListener(setStepCount: (Int) -> Unit): SensorEventListener {
-        return sensorRepository.sensorListener {
-            setStepCount(it)
-            stepCount = it
-        }
-    }
 }

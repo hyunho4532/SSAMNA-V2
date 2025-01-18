@@ -22,6 +22,7 @@ import com.asetec.presentation.R
 import com.asetec.presentation.enum.ButtonType
 import com.asetec.data.service.SensorService
 import com.asetec.presentation.viewmodel.ActivityLocationViewModel
+import com.asetec.presentation.viewmodel.SensorManagerViewModel
 
 @Composable
 fun CustomButton(
@@ -33,7 +34,7 @@ fun CustomButton(
     backgroundColor: Color,
     navController: NavController?,
     context: Context?,
-    activityLocationViewModel: ActivityLocationViewModel = hiltViewModel()
+    sensorManagerViewModel: SensorManagerViewModel = hiltViewModel(),
 ) {
     Button(
         onClick = {
@@ -44,15 +45,7 @@ fun CustomButton(
                     }
                 }
             } else {
-                val intent = Intent(context, SensorService::class.java)
-
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                    context?.startForegroundService(intent)
-                } else {
-                    context?.startService(intent)
-                }
-
-                activityLocationViewModel.clickListener()
+                sensorManagerViewModel.startService(context!!)
             }
         },
         modifier = Modifier

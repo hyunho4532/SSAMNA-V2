@@ -1,34 +1,34 @@
-package com.asetec.data.repository.sensor
+package com.asetec.data.manager
 
 import android.app.Notification
 import android.app.NotificationManager
 import android.content.Context
+import android.content.Intent
 import android.hardware.Sensor
 import android.hardware.SensorEvent
 import android.hardware.SensorEventListener
-import android.hardware.SensorManager
+import android.os.Build
 import androidx.core.app.NotificationCompat
 import com.asetec.data.R
-import com.asetec.domain.repository.sensor.SensorRepository
+import com.asetec.data.service.SensorService
+import com.asetec.domain.manager.SensorServiceManager
 import dagger.hilt.android.qualifiers.ApplicationContext
 import javax.inject.Inject
 
-class SensorRepositoryImpl @Inject constructor(
+class SensorManagerImpl @Inject constructor(
     @ApplicationContext private val context: Context
-): SensorRepository, SensorEventListener {
+) : SensorServiceManager {
 
     private var initialStepCount: Int? = null
     private var currentStepCount: Int = 0
 
-    override fun updateNotification(stepCount: Int) {
-        val notification: Notification = NotificationCompat.Builder(context, "step_counter_channel")
-            .setSmallIcon(R.drawable.baseline_persons_run_24)
-            .setContentTitle("걸음을 유지하세요!!")
-            .setContentText("현재 걸음 수: $stepCount")
-            .build()
-
-        val notificationManager = context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
-        notificationManager.notify(1, notification)
+    override fun startSensorService(context: Context) {
+        val intent = Intent(context, SensorService::class.java)
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            context.startForegroundService(intent)
+        } else {
+            context.startService(intent)
+        }
     }
 
     override fun sensorListener(setStepCount: (Int) -> Unit): SensorEventListener {
@@ -52,11 +52,14 @@ class SensorRepositoryImpl @Inject constructor(
         return listener
     }
 
-    override fun onSensorChanged(event: SensorEvent?) {
+    override fun updateNotification(stepCount: Int) {
+        val notification: Notification = NotificationCompat.Builder(context, "step_counter_channel")
+            .setSmallIcon(R.drawable.baseline_persons_run_24)
+            .setContentTitle("걸음을 유지하세요!!")
+            .setContentText("현재 걸음 수: $stepCount")
+            .build()
 
-    }
-
-    override fun onAccuracyChanged(p0: Sensor?, p1: Int) {
-
+        val notificationManager = context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+        notificationManager.notify(1, notification)
     }
 }

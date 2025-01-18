@@ -49,6 +49,9 @@ android {
 
 dependencies {
     implementation("com.google.code.gson:gson:2.8.9")
+    implementation("com.google.maps.android:maps-compose:2.11.1")
+    implementation("com.google.android.gms:play-services-maps:18.1.0")
+    implementation("com.google.android.gms:play-services-location:21.0.1")
 
     implementation("io.github.jan-tennert.supabase:compose-auth:2.4.2")
     implementation("io.github.jan-tennert.supabase:gotrue-kt:2.4.2")
