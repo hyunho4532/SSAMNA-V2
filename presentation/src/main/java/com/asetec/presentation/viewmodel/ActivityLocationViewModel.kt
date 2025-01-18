@@ -56,4 +56,12 @@ class ActivityLocationViewModel @Inject constructor(): ViewModel() {
             )
         }
     }
+
+    fun finishIsRunning(isRunning: Boolean) {
+        _activates.update {
+            it.copy(
+                showRunningStatus = isRunning
+            )
+        }
+    }
 }

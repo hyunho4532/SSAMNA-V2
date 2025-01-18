@@ -200,7 +200,7 @@ fun HomeAside(
         }
 
         CustomButton(
-            type = ButtonType.STATUS,
+            type = ButtonType.STATUS.OPEN,
             width = 110.dp,
             height = 36.dp,
             text = activates.activateButtonName,

@@ -19,5 +19,10 @@ data class Activate(
 
     /** 만보기 걸음 수 **/
     var prevPedometerCount: Int = 0,
-    var pedometerCount: Int = 0
+    var pedometerCount: Int = 0,
+
+    /**
+     * 현재 러닝 진행 중인지 상태를 보여줌
+     */
+    var showRunningStatus: Boolean = false
 )

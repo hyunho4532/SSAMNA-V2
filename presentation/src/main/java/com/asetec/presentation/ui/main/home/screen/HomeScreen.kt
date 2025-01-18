@@ -35,6 +35,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import com.asetec.domain.model.user.User
 import com.asetec.presentation.component.aside.HomeAside
 import com.asetec.presentation.component.box.TopBox
+import com.asetec.presentation.component.dialog.ShowCompleteDialog
 import com.asetec.presentation.ui.tool.CircularProgress
 import com.asetec.presentation.viewmodel.ActivityLocationViewModel
 import com.asetec.presentation.viewmodel.SensorManagerViewModel
@@ -127,6 +128,9 @@ fun HomeScreen(
                 TopBox(context)
             }
 
+            if (activates.showRunningStatus) {
+                ShowCompleteDialog()
+            }
 
             Box (
                 modifier = Modifier.fillMaxSize()

@@ -34,6 +34,7 @@ fun CustomButton(
     backgroundColor: Color,
     navController: NavController?,
     context: Context?,
+    activityLocationViewModel: ActivityLocationViewModel = hiltViewModel(),
     sensorManagerViewModel: SensorManagerViewModel = hiltViewModel(),
 ) {
     Button(
@@ -45,7 +46,11 @@ fun CustomButton(
                     }
                 }
             } else {
-                sensorManagerViewModel.startService(context!!)
+                if (type == ButtonType.STATUS.FINISH) {
+                    activityLocationViewModel.finishIsRunning(true)
+                } else {
+                    sensorManagerViewModel.startService(context!!)
+                }
             }
         },
         modifier = Modifier

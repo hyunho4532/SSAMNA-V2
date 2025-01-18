@@ -105,7 +105,7 @@ fun TopBox(
                 .padding(top = 8.dp, end = 4.dp)
         ) {
             CustomButton(
-                type = ButtonType.STATUS,
+                type = ButtonType.STATUS.FINISH,
                 width = 110.dp,
                 height = 32.dp,
                 text = "측정 완료!",
