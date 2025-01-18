@@ -1,4 +1,4 @@
-package com.asetec.presentation.service
+package com.asetec.data.service
 
 import android.app.Notification
 import android.app.NotificationChannel
@@ -14,15 +14,12 @@ import android.os.Build
 import android.os.IBinder
 import android.util.Log
 import androidx.core.app.NotificationCompat
-import com.asetec.presentation.R
-import com.asetec.presentation.viewmodel.ActivityLocationViewModel
-import javax.inject.Inject
+import com.asetec.data.R
 
 
 class SensorService : Service(), SensorEventListener {
 
     private lateinit var sensorManager: SensorManager
-    private val activityLocationViewModel: ActivityLocationViewModel = ActivityLocationViewModel()
 
     private var initialStepCount: Int? = null
     private var currentStepCount: Int = 0
@@ -100,19 +97,5 @@ class SensorService : Service(), SensorEventListener {
     override fun onDestroy() {
         super.onDestroy()
         sensorManager.unregisterListener(this)
-    }
-
-    fun sensorListener(): SensorEventListener {
-        val listener = object : SensorEventListener {
-            override fun onSensorChanged(event: SensorEvent?) {
-                event?.let {
-                    activityLocationViewModel.activates.value.pedometerCount = it.values[0].toInt()
-                }
-            }
-
-            override fun onAccuracyChanged(p0: Sensor?, p1: Int) {}
-        }
-
-        return listener
     }
 }

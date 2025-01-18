@@ -1,12 +1,14 @@
 package com.asetec.presentation.viewmodel
 
 import android.annotation.SuppressLint
+import android.hardware.SensorEventListener
 import android.util.Log
 import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import com.asetec.domain.model.location.Location
 import com.asetec.domain.model.state.Activate
+import com.asetec.domain.usecase.sensor.SensorCase
 import com.google.android.gms.location.FusedLocationProviderClient
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -16,7 +18,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class ActivityLocationViewModel @Inject constructor(
-
+    private val sensorCase: SensorCase
 ): ViewModel() {
 
     private val _locations = MutableStateFlow(Location(
@@ -57,6 +59,16 @@ class ActivityLocationViewModel @Inject constructor(
         }
     }
 
+    fun sensorEventListener(): SensorEventListener {
+        return sensorCase.sensorListener { stepCount ->
+            _activates.update {
+                it.copy(
+                    pedometerCount = stepCount
+                )
+            }
+        }
+    }
+
     /**
      * 클릭 이벤트 리스너
      */
@@ -74,5 +86,9 @@ class ActivityLocationViewModel @Inject constructor(
                 pedometerCount = count
             )
         }
+    }
+
+    fun sensorListener() {
+
     }
 }

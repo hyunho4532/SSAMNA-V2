@@ -21,14 +21,14 @@
     <application>
 
         <service
-            android:name=".service.LocationService"
+            android:name="com.asetec.data.service.LocationService"
             android:permission="android.permission.BIND_JOB_SERVICE"
             android:enabled="true"
             android:exported="false"
             android:foregroundServiceType="location"/>
 
         <service
-            android:name=".service.SensorService"
+            android:name="com.asetec.data.service.SensorService"
             android:enabled="true"
             android:exported="false"
             android:foregroundServiceType="health" />

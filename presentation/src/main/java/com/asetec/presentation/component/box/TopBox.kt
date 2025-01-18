@@ -2,8 +2,6 @@ package com.asetec.presentation.component.box
 
 import android.content.Context
 import android.hardware.Sensor
-import android.hardware.SensorEvent
-import android.hardware.SensorEventListener
 import android.hardware.SensorManager
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -19,7 +17,6 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -29,7 +26,7 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.asetec.presentation.component.icon.Footprint
 import com.asetec.presentation.enum.ButtonType
-import com.asetec.presentation.service.SensorService
+import com.asetec.data.service.SensorService
 import com.asetec.presentation.ui.tool.CustomButton
 import com.asetec.presentation.ui.tool.Spacer
 import com.asetec.presentation.viewmodel.ActivityLocationViewModel
@@ -40,8 +37,7 @@ import com.asetec.presentation.viewmodel.ActivityLocationViewModel
 @Composable
 fun TopBox(
     context: Context,
-    activityLocationViewModel: ActivityLocationViewModel = hiltViewModel(),
-    sensorService: SensorService = SensorService()
+    activityLocationViewModel: ActivityLocationViewModel = hiltViewModel()
 ) {
 
     val activates = activityLocationViewModel.activates.collectAsState()
@@ -53,7 +49,7 @@ fun TopBox(
     val stepDetector = sensorManager.getDefaultSensor(Sensor.TYPE_STEP_COUNTER)
 
     DisposableEffect(Unit) {
-        val listener = sensorService.sensorListener()
+        val listener = activityLocationViewModel.sensorEventListener()
 
         stepDetector?.let {
             sensorManager.registerListener(listener, it, SensorManager.SENSOR_DELAY_UI)

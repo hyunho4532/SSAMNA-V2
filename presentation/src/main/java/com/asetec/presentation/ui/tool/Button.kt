@@ -20,7 +20,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.asetec.presentation.R
 import com.asetec.presentation.enum.ButtonType
-import com.asetec.presentation.service.SensorService
+import com.asetec.data.service.SensorService
 import com.asetec.presentation.viewmodel.ActivityLocationViewModel
 
 @Composable
