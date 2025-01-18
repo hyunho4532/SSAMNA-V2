@@ -205,7 +205,8 @@ fun HomeAside(
             text = activates.activateButtonName,
             showIcon = false,
             backgroundColor = Color(0xFF5c9afa),
-            navController = null
+            navController = null,
+            context = context
         )
     }
 

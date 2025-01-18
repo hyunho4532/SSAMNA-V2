@@ -41,7 +41,7 @@ import com.asetec.presentation.viewmodel.ActivityLocationViewModel
 fun TopBox(
     context: Context,
     activityLocationViewModel: ActivityLocationViewModel = hiltViewModel(),
-    sensorService: SensorService = SensorService(activityLocationViewModel)
+    sensorService: SensorService = SensorService()
 ) {
 
     val activates = activityLocationViewModel.activates.collectAsState()
@@ -50,7 +50,7 @@ fun TopBox(
         context.getSystemService(Context.SENSOR_SERVICE) as SensorManager
     }
 
-    val stepDetector = sensorManager.getDefaultSensor(Sensor.TYPE_STEP_DETECTOR)
+    val stepDetector = sensorManager.getDefaultSensor(Sensor.TYPE_STEP_COUNTER)
 
     DisposableEffect(Unit) {
         val listener = sensorService.sensorListener()
@@ -114,7 +114,8 @@ fun TopBox(
                 text = "측정 완료!",
                 showIcon = false,
                 backgroundColor = Color(0xFF5c9afa),
-                navController = null
+                navController = null,
+                context = context
             )
         }
     }

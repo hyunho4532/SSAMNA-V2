@@ -1,5 +1,8 @@
 package com.asetec.presentation.ui.tool
 
+import android.content.Context
+import android.content.Intent
+import android.os.Build
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.wrapContentSize
@@ -17,6 +20,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.asetec.presentation.R
 import com.asetec.presentation.enum.ButtonType
+import com.asetec.presentation.service.SensorService
 import com.asetec.presentation.viewmodel.ActivityLocationViewModel
 
 @Composable
@@ -28,6 +32,7 @@ fun CustomButton(
     showIcon: Boolean,
     backgroundColor: Color,
     navController: NavController?,
+    context: Context?,
     activityLocationViewModel: ActivityLocationViewModel = hiltViewModel()
 ) {
     Button(
@@ -39,6 +44,14 @@ fun CustomButton(
                     }
                 }
             } else {
+                val intent = Intent(context, SensorService::class.java)
+
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                    context?.startForegroundService(intent)
+                } else {
+                    context?.startService(intent)
+                }
+
                 activityLocationViewModel.clickListener()
             }
         },
