@@ -39,4 +39,12 @@ class SensorManagerViewModel @Inject constructor(
             }
         }
     }
+
+    fun sensorIsRunningFinish(isRunning: Boolean) {
+        _activates.update {
+            it.copy(
+                showRunningStatus = isRunning
+            )
+        }
+    }
 }

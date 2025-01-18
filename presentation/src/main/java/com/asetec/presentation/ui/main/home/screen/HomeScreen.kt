@@ -129,7 +129,7 @@ fun HomeScreen(
             }
 
             if (activates.showRunningStatus) {
-                ShowCompleteDialog()
+                ShowCompleteDialog(sensorManagerViewModel)
             }
 
             Box (
