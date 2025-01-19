@@ -69,7 +69,10 @@ fun ShowCompleteDialog(
 
     Dialog(
         onDismissRequest = {
-            sensorManagerViewModel.sensorIsRunningFinish(false)
+            sensorManagerViewModel.stopService(
+                context = context,
+                isRunning = false
+            )
         }
     ) {
         Card(
@@ -154,7 +157,7 @@ fun ShowCompleteDialog(
 
                 GoogleMap(
                     modifier = Modifier
-                        .width(310.dp)
+                        .width(300.dp)
                         .height(420.dp)
                         .padding(top = 12.dp),
                     cameraPositionState = cameraPositionState

@@ -30,6 +30,15 @@ class SensorManagerViewModel @Inject constructor(
         }
     }
 
+    fun stopService(context: Context, isRunning: Boolean) {
+        _activates.update {
+            it.copy(
+                showRunningStatus = isRunning,
+                activateButtonName = "측정하기!"
+            )
+        }
+    }
+
     fun sensorEventListener(): SensorEventListener {
         return sensorManagerCase.sensorListener { stepCount ->
             _activates.update {
@@ -37,14 +46,6 @@ class SensorManagerViewModel @Inject constructor(
                     pedometerCount = stepCount
                 )
             }
-        }
-    }
-
-    fun sensorIsRunningFinish(isRunning: Boolean) {
-        _activates.update {
-            it.copy(
-                showRunningStatus = isRunning
-            )
         }
     }
 }

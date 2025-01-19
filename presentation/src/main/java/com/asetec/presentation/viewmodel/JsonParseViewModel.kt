@@ -45,4 +45,8 @@ class JsonParseViewModel @Inject constructor(
             }
         }
     }
+
+    fun runningJsonDataAdd() {
+
+    }
 }

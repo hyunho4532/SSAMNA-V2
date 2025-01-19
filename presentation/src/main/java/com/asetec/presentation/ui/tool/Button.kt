@@ -46,7 +46,10 @@ fun CustomButton(
                 }
             } else {
                 if (type == ButtonType.RunningStatus.FINISH) {
-                    sensorManagerViewModel.sensorIsRunningFinish(true)
+                    sensorManagerViewModel.stopService(
+                        context = context!!,
+                        isRunning = true
+                    )
                 } else {
                     sensorManagerViewModel.startService(context!!)
                 }
@@ -60,7 +63,6 @@ fun CustomButton(
             containerColor = backgroundColor
         )
     ) {
-
         if (showIcon) {
             Icon(
                 painter = painterResource(id = R.drawable.baseline_water_drop_24),
