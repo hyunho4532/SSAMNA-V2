@@ -6,6 +6,7 @@
     <string name="title_activity_home">HomeActivity</string>
 
     <string name="hint_recent_exercise">ex) 스쿼트, 팔굽혀펴기</string>
+    <string name="hint_name_exercise">ex) 행복한 운동 생활!</string>
 
     <string name="hint_exercise_week">3</string>
 
