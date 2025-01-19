@@ -3,6 +3,8 @@ package com.asetec.data.repository.json
 import android.content.Context
 import android.content.res.AssetManager
 import com.asetec.domain.model.state.Activate
+import com.asetec.domain.model.state.ActivityType
+import com.asetec.domain.model.state.Running
 import com.asetec.domain.repository.json.JsonParsingRepository
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
@@ -16,9 +18,13 @@ class JsonParsingRepositoryImpl @Inject constructor(
 
     private val gson = Gson()
 
-    private val activateListType = object : TypeToken<List<Activate>>() {}.type
+    override fun jsonParse(jsonFile: String, type: String, onType: (String) -> Unit): List<ActivityType> {
 
-    override fun jsonParse(jsonFile: String): List<Activate> {
+        val listType = if (type == "activate") {
+            object : TypeToken<List<Activate>>() {}.type
+        } else {
+            object : TypeToken<List<Running>>() {}.type
+        }
 
         val assetManager: AssetManager = context.assets
 
@@ -26,6 +32,8 @@ class JsonParsingRepositoryImpl @Inject constructor(
             it.readText()
         }
 
-        return gson.fromJson(json, activateListType)
+        onType(type)
+
+        return gson.fromJson(json, listType)
     }
 }

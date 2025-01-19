@@ -27,6 +27,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
+import com.asetec.domain.model.state.Activate
 import com.asetec.presentation.ui.tool.activateCard
 import com.asetec.presentation.viewmodel.JsonParseViewModel
 import com.asetec.presentation.viewmodel.UserViewModel
@@ -46,7 +47,7 @@ fun ActivateBottomSheet(
 
     LaunchedEffect(key1 = Unit) {
         if (jsonParseViewModel.activateJsonData.isEmpty()) {
-            jsonParseViewModel.activateJsonParse("activate.json")
+            jsonParseViewModel.activateJsonParse("activate.json", "activate")
         }
         dataIsLoading = true
     }
@@ -98,8 +99,7 @@ fun ActivateBottomSheet(
 fun TimeBottomSheet(
     context: Context,
     showBottomSheet: MutableState<Boolean>,
-    sheetState: SheetState,
-    jsonParseViewModel: JsonParseViewModel = hiltViewModel(),
+    sheetState: SheetState
 ) {
 
     var checked by remember {
