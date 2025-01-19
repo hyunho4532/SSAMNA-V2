@@ -1,4 +1,4 @@
-package com.asetec.presentation.component
+package com.asetec.presentation.component.aside
 
 import android.annotation.SuppressLint
 import android.content.Context
@@ -40,6 +40,7 @@ import com.asetec.presentation.enum.ButtonType
 import com.asetec.presentation.ui.tool.CustomButton
 import com.asetec.presentation.ui.tool.Spacer
 import com.asetec.presentation.viewmodel.ActivityLocationViewModel
+import com.asetec.presentation.viewmodel.SensorManagerViewModel
 import com.asetec.presentation.viewmodel.UserViewModel
 
 @SuppressLint("StateFlowValueCalledInComposition")
@@ -47,12 +48,12 @@ import com.asetec.presentation.viewmodel.UserViewModel
 @Composable
 fun HomeAside(
     context: Context,
-    activityLocationViewModel: ActivityLocationViewModel = hiltViewModel(),
+    sensorManagerViewModel: SensorManagerViewModel = hiltViewModel(),
     userViewModel: UserViewModel = hiltViewModel(),
     userList: State<User>
 ) {
 
-    val activates by activityLocationViewModel.activates.collectAsState()
+    val activates by sensorManagerViewModel.activates.collectAsState()
 
     val showActivateBottomSheet = remember {
         mutableStateOf(false)
@@ -199,13 +200,15 @@ fun HomeAside(
         }
 
         CustomButton(
-            type = ButtonType.STATUS,
+            type = ButtonType.RunningStatus.OPEN,
             width = 110.dp,
             height = 36.dp,
             text = activates.activateButtonName,
             showIcon = false,
             backgroundColor = Color(0xFF5c9afa),
-            navController = null
+            navController = null,
+            context = context,
+            shape = "Circle"
         )
     }
 

@@ -97,7 +97,9 @@ fun OnBoardingScreen(
                     text = "운동 여정하기!",
                     showIcon = true,
                     backgroundColor = Color(0xFF5c9afa),
-                    navController = navController
+                    navController = navController,
+                    context = null,
+                    shape = "Rectangle"
                 )
             }
         }

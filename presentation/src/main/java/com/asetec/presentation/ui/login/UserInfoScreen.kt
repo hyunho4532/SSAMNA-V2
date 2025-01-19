@@ -41,12 +41,12 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.asetec.domain.model.user.User
 import com.asetec.presentation.R
-import com.asetec.presentation.component.RadioRow
+import com.asetec.presentation.component.row.RadioRow
 import com.asetec.presentation.ui.responsive.setFontSize
 import com.asetec.presentation.ui.responsive.setUpButtonWidth
 import com.asetec.presentation.ui.responsive.setUpSliderWidth
 import com.asetec.presentation.ui.tool.Spacer
-import com.asetec.presentation.util.getDPI
+import com.asetec.presentation.component.util.getDPI
 import com.asetec.presentation.viewmodel.UserViewModel
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json

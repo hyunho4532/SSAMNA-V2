@@ -73,4 +73,5 @@ dependencies {
 
     // 프로젝트 의존성 설정
     implementation(project(":presentation"))
+    implementation(project(":data"))
 }

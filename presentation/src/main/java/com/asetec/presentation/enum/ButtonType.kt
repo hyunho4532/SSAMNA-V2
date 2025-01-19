@@ -1,5 +1,10 @@
 package com.asetec.presentation.enum
 
-enum class ButtonType {
-    ROUTER, STATUS
+sealed class ButtonType {
+    data object ROUTER: ButtonType()
+    sealed class RunningStatus: ButtonType() {
+        data object FINISH : RunningStatus()
+        data object OPEN: RunningStatus()
+        data object INSERT: RunningStatus()
+    }
 }

@@ -1,4 +1,4 @@
-package com.asetec.presentation.component
+package com.asetec.presentation.component.bar
 
 import android.util.Log
 import androidx.compose.runtime.Composable

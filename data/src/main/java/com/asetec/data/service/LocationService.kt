@@ -1,4 +1,4 @@
-package com.asetec.presentation.service
+package com.asetec.data.service
 
 import android.Manifest
 import android.annotation.SuppressLint
@@ -11,7 +11,6 @@ import android.content.pm.PackageManager
 import android.location.Location
 import android.os.Build
 import android.os.IBinder
-import android.util.Log
 import androidx.core.app.ActivityCompat
 import androidx.core.app.NotificationCompat
 import com.google.android.gms.location.FusedLocationProviderClient

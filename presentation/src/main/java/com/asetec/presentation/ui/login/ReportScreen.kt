@@ -31,7 +31,7 @@ import com.asetec.domain.model.user.User
 import com.asetec.presentation.ui.main.home.HomeActivity
 import com.asetec.presentation.ui.responsive.setUpButtonWidth
 import com.asetec.presentation.ui.tool.ReportCard
-import com.asetec.presentation.util.getDPI
+import com.asetec.presentation.component.util.getDPI
 import com.asetec.presentation.viewmodel.UserViewModel
 
 /** 정보 수집 후 사용자에 관한 최종 정보 **/

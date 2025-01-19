@@ -1,8 +1,11 @@
 package com.asetec.presentation.ui.tool
 
+import android.content.Context
+import android.graphics.drawable.shapes.Shape
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.wrapContentSize
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Icon
@@ -10,6 +13,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
@@ -18,6 +22,7 @@ import androidx.navigation.NavController
 import com.asetec.presentation.R
 import com.asetec.presentation.enum.ButtonType
 import com.asetec.presentation.viewmodel.ActivityLocationViewModel
+import com.asetec.presentation.viewmodel.SensorManagerViewModel
 
 @Composable
 fun CustomButton(
@@ -28,6 +33,9 @@ fun CustomButton(
     showIcon: Boolean,
     backgroundColor: Color,
     navController: NavController?,
+    context: Context?,
+    shape: String,
+    sensorManagerViewModel: SensorManagerViewModel = hiltViewModel(),
     activityLocationViewModel: ActivityLocationViewModel = hiltViewModel()
 ) {
     Button(
@@ -39,7 +47,21 @@ fun CustomButton(
                     }
                 }
             } else {
-                activityLocationViewModel.clickListener()
+                when (type) {
+                    ButtonType.RunningStatus.FINISH -> {
+                        sensorManagerViewModel.stopService(
+                            context = context!!,
+                            runningStatus = true,
+                            isRunning = false
+                        )
+                    }
+                    ButtonType.RunningStatus.INSERT -> {
+                        activityLocationViewModel.saveActivity()
+                    }
+                    else -> {
+                        sensorManagerViewModel.startService(context!!, true)
+                    }
+                }
             }
         },
         modifier = Modifier
@@ -48,9 +70,9 @@ fun CustomButton(
             .height(height),
         colors = ButtonDefaults.buttonColors(
             containerColor = backgroundColor
-        )
+        ),
+        shape = if (shape == "Circle") CircleShape else RectangleShape
     ) {
-
         if (showIcon) {
             Icon(
                 painter = painterResource(id = R.drawable.baseline_water_drop_24),

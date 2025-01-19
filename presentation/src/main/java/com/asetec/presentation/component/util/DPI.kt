@@ -1,4 +1,4 @@
-package com.asetec.presentation.util
+package com.asetec.presentation.component.util
 
 import android.content.Context
 
