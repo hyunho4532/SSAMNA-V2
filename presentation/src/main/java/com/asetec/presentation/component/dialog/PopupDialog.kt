@@ -1,5 +1,6 @@
 package com.asetec.presentation.component.dialog
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.util.Log
 import androidx.compose.foundation.background
@@ -21,6 +22,7 @@ import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -40,6 +42,10 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import com.asetec.presentation.R
 import com.asetec.presentation.component.row.BoxRow
 import com.asetec.presentation.component.util.nestedScrollConnection
+import com.asetec.presentation.enum.ButtonType
+import com.asetec.presentation.ui.tool.CustomButton
+import com.asetec.presentation.ui.tool.Spacer
+import com.asetec.presentation.viewmodel.ActivityLocationViewModel
 import com.asetec.presentation.viewmodel.JsonParseViewModel
 import com.asetec.presentation.viewmodel.SensorManagerViewModel
 import com.google.android.gms.maps.model.LatLng
@@ -48,18 +54,17 @@ import com.google.maps.android.compose.Marker
 import com.google.maps.android.compose.MarkerState
 import com.google.maps.android.compose.rememberCameraPositionState
 
+@SuppressLint("StateFlowValueCalledInComposition")
 @Composable
 fun ShowCompleteDialog(
     context: Context,
     sensorManagerViewModel: SensorManagerViewModel,
+    activityLocationViewModel: ActivityLocationViewModel = hiltViewModel(),
     jsonParseViewModel: JsonParseViewModel = hiltViewModel()
 ) {
-
-    var exerciseName by remember {
-        mutableStateOf("")
-    }
-
     val cameraPositionState = rememberCameraPositionState()
+
+    val activates = activityLocationViewModel.activates.collectAsState()
 
     LaunchedEffect(key1 = Unit) {
         if (jsonParseViewModel.runningJsonData.isEmpty()) {
@@ -71,6 +76,7 @@ fun ShowCompleteDialog(
         onDismissRequest = {
             sensorManagerViewModel.stopService(
                 context = context,
+                runningStatus = false,
                 isRunning = false
             )
         }
@@ -129,9 +135,9 @@ fun ShowCompleteDialog(
                         modifier = Modifier
                             .width(280.dp)
                             .height(56.dp),
-                        value = exerciseName,
+                        value = activates.value.runningTitle,
                         onValueChange = {
-                            exerciseName = it
+                            activityLocationViewModel.updateRunningTitle(it)
                         },
                         singleLine = true,
                         textStyle = TextStyle(fontSize = 14.sp),
@@ -164,6 +170,25 @@ fun ShowCompleteDialog(
                 ) {
 
                 }
+
+                Box(
+                    modifier = Modifier
+                        .padding(top = 8.dp, end = 4.dp)
+                ) {
+                    CustomButton(
+                        type = ButtonType.RunningStatus.INSERT,
+                        width = 300.dp,
+                        height = 32.dp,
+                        text = "활동 저장!",
+                        showIcon = false,
+                        backgroundColor = Color(0xFF5c9afa),
+                        navController = null,
+                        context = context,
+                        shape = "Rectangle"
+                    )
+                }
+
+                Spacer(width = 0.dp, height = 16.dp)
             }
         }
     }

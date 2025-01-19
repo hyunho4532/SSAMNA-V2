@@ -207,7 +207,8 @@ fun HomeAside(
             showIcon = false,
             backgroundColor = Color(0xFF5c9afa),
             navController = null,
-            context = context
+            context = context,
+            shape = "Circle"
         )
     }
 

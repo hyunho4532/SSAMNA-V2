@@ -29,15 +29,20 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
 import com.asetec.domain.model.state.Activate
 import com.asetec.domain.model.state.Running
 import com.asetec.presentation.R
+import com.asetec.presentation.viewmodel.ActivityLocationViewModel
+import com.asetec.presentation.viewmodel.SensorManagerViewModel
 
 @SuppressLint("DiscouragedApi")
 @Composable
 fun BoxRow(
     context: Context,
-    data: List<Any>
+    data: List<Any>,
+    sensorManagerViewModel: SensorManagerViewModel = hiltViewModel(),
+    userLocationViewModel: ActivityLocationViewModel = hiltViewModel()
 ) {
 
     var selectedIndex by remember {
@@ -75,7 +80,10 @@ fun BoxRow(
                             )
                         ) {
                             selectedIndex = items.index
-                            Log.d("BoxRow", selectedIndex.toString())
+                            userLocationViewModel.statusClick(
+                                name = items.status,
+                                resId = imageResId
+                            )
                         }
                 ) {
 

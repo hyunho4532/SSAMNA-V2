@@ -1,11 +1,11 @@
 package com.asetec.presentation.ui.tool
 
 import android.content.Context
-import android.content.Intent
-import android.os.Build
+import android.graphics.drawable.shapes.Shape
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.wrapContentSize
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Icon
@@ -13,6 +13,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
@@ -20,7 +21,6 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.asetec.presentation.R
 import com.asetec.presentation.enum.ButtonType
-import com.asetec.data.service.SensorService
 import com.asetec.presentation.viewmodel.ActivityLocationViewModel
 import com.asetec.presentation.viewmodel.SensorManagerViewModel
 
@@ -34,7 +34,9 @@ fun CustomButton(
     backgroundColor: Color,
     navController: NavController?,
     context: Context?,
+    shape: String,
     sensorManagerViewModel: SensorManagerViewModel = hiltViewModel(),
+    activityLocationViewModel: ActivityLocationViewModel = hiltViewModel()
 ) {
     Button(
         onClick = {
@@ -45,13 +47,20 @@ fun CustomButton(
                     }
                 }
             } else {
-                if (type == ButtonType.RunningStatus.FINISH) {
-                    sensorManagerViewModel.stopService(
-                        context = context!!,
-                        isRunning = true
-                    )
-                } else {
-                    sensorManagerViewModel.startService(context!!)
+                when (type) {
+                    ButtonType.RunningStatus.FINISH -> {
+                        sensorManagerViewModel.stopService(
+                            context = context!!,
+                            runningStatus = true,
+                            isRunning = false
+                        )
+                    }
+                    ButtonType.RunningStatus.INSERT -> {
+                        activityLocationViewModel.saveActivity()
+                    }
+                    else -> {
+                        sensorManagerViewModel.startService(context!!, true)
+                    }
                 }
             }
         },
@@ -61,7 +70,8 @@ fun CustomButton(
             .height(height),
         colors = ButtonDefaults.buttonColors(
             containerColor = backgroundColor
-        )
+        ),
+        shape = if (shape == "Circle") CircleShape else RectangleShape
     ) {
         if (showIcon) {
             Icon(

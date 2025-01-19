@@ -8,6 +8,7 @@ import android.hardware.Sensor
 import android.hardware.SensorEvent
 import android.hardware.SensorEventListener
 import android.os.Build
+import android.util.Log
 import androidx.core.app.NotificationCompat
 import com.asetec.data.R
 import com.asetec.data.service.SensorService
@@ -36,17 +37,23 @@ class SensorManagerImpl @Inject constructor(
         context.stopService(intent)
     }
 
-    override fun sensorListener(setStepCount: (Int) -> Unit): SensorEventListener {
+    override fun sensorListener(stepCount: Int, setStepCount: (Int) -> Unit): SensorEventListener {
         val listener = object : SensorEventListener {
             override fun onSensorChanged(event: SensorEvent?) {
                 event?.let {
                     if (initialStepCount == null) {
                         initialStepCount = it.values[0].toInt()
                     }
-                    currentStepCount = it.values[0].toInt() - (initialStepCount ?: 0)
+                    val sensorStepCount = it.values[0].toInt() - (initialStepCount ?: 0)
 
+                    currentStepCount = if (stepCount == 0) {
+                        sensorStepCount
+                    } else {
+                        stepCount + sensorStepCount
+                    }
 
                     updateNotification(currentStepCount)
+
                     setStepCount(currentStepCount)
                 }
             }

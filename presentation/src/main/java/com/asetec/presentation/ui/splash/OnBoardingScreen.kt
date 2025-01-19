@@ -98,7 +98,8 @@ fun OnBoardingScreen(
                     showIcon = true,
                     backgroundColor = Color(0xFF5c9afa),
                     navController = navController,
-                    context = null
+                    context = null,
+                    shape = "Rectangle"
                 )
             }
         }

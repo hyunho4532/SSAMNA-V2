@@ -5,5 +5,6 @@ sealed class ButtonType {
     sealed class RunningStatus: ButtonType() {
         data object FINISH : RunningStatus()
         data object OPEN: RunningStatus()
+        data object INSERT: RunningStatus()
     }
 }

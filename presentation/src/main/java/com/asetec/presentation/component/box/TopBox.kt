@@ -46,10 +46,6 @@ fun TopBox(
 
     val activates = sensorManagerViewModel.activates.collectAsState()
 
-    val destroyTest = remember {
-        mutableStateOf("1")
-    }
-
     val sensorManager = remember {
         context.getSystemService(Context.SENSOR_SERVICE) as SensorManager
     }
@@ -126,7 +122,8 @@ fun TopBox(
                 showIcon = false,
                 backgroundColor = Color(0xFF5c9afa),
                 navController = null,
-                context = context
+                context = context,
+                shape = "Circle"
             )
         }
     }
