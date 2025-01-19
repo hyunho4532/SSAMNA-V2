@@ -12,6 +12,10 @@ class SensorManagerCase @Inject constructor(
         sensorServiceManager.startSensorService(context)
     }
 
+    fun stopService(context: Context) {
+        sensorServiceManager.stopSensorService(context)
+    }
+
     fun sensorListener(setStepCount: (Int) -> Unit): SensorEventListener {
         return sensorServiceManager.sensorListener {
             setStepCount(it)

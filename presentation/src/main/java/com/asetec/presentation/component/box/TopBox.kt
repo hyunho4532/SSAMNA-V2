@@ -3,6 +3,7 @@ package com.asetec.presentation.component.box
 import android.content.Context
 import android.hardware.Sensor
 import android.hardware.SensorManager
+import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -16,7 +17,9 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -43,11 +46,19 @@ fun TopBox(
 
     val activates = sensorManagerViewModel.activates.collectAsState()
 
+    val destroyTest = remember {
+        mutableStateOf("1")
+    }
+
     val sensorManager = remember {
         context.getSystemService(Context.SENSOR_SERVICE) as SensorManager
     }
 
     val stepDetector = sensorManager.getDefaultSensor(Sensor.TYPE_STEP_COUNTER)
+
+    LaunchedEffect(key1 = Unit) {
+        sensorManagerViewModel.getSavedSensorState()
+    }
 
     DisposableEffect(Unit) {
         val listener = sensorManagerViewModel.sensorEventListener()
@@ -57,7 +68,10 @@ fun TopBox(
         }
 
         onDispose {
-            sensorManager.unregisterListener(listener)
+            sensorManagerViewModel.setSavedSensorState()
+            stepDetector?.let {
+                sensorManager.registerListener(listener, it, SensorManager.SENSOR_DELAY_UI)
+            }
         }
     }
     

@@ -31,6 +31,11 @@ class SensorManagerImpl @Inject constructor(
         }
     }
 
+    override fun stopSensorService(context: Context) {
+        val intent = Intent(context, SensorService::class.java)
+        context.stopService(intent)
+    }
+
     override fun sensorListener(setStepCount: (Int) -> Unit): SensorEventListener {
         val listener = object : SensorEventListener {
             override fun onSensorChanged(event: SensorEvent?) {
