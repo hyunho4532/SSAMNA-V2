@@ -9,6 +9,10 @@ data class Activate(
     val description: String = "",
     val assets: String = "",
 
+    /**
+     * Google ID
+     */
+    val googleId: String = "",
 
     /** 활동 종류 **/
     var activateResId: Int = 2131165314,

@@ -7,8 +7,10 @@ import android.util.Log
 import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.asetec.domain.model.location.Location
 import com.asetec.domain.model.state.Activate
+import com.asetec.domain.usecase.activate.ActivateCase
 import com.asetec.domain.usecase.sensor.SensorCase
 import com.google.android.gms.location.FusedLocationProviderClient
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -16,14 +18,17 @@ import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.update
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
 class ActivityLocationViewModel @Inject constructor(
+    private val activateCase: ActivateCase,
     @ApplicationContext appContext: Context
 ): ViewModel() {
 
     private var sharedPreferences = appContext.getSharedPreferences("sensor_prefs", Context.MODE_PRIVATE)
+    private val sharedPreferences2 = appContext.getSharedPreferences("user_prefs", Context.MODE_PRIVATE)
 
     private val _locations = MutableStateFlow(Location(
         latitude = 0.0,
@@ -82,7 +87,18 @@ class ActivityLocationViewModel @Inject constructor(
      */
     fun saveActivity() {
         val pedometerCount = sharedPreferences.getInt("pedometerCount", _activates.value.pedometerCount)
+        val googleId = sharedPreferences2.getString("id", "")
 
-        
+        val activate = Activate (
+            googleId = googleId!!,
+            runningTitle = _activates.value.runningTitle,
+            statusIcon = _activates.value.statusIcon,
+            statusName = _activates.value.statusName,
+            pedometerCount = pedometerCount
+        )
+
+        viewModelScope.launch {
+            activateCase.saveActivity(activate = activate)
+        }
     }
 }
