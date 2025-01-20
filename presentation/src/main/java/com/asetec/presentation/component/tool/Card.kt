@@ -218,7 +218,6 @@ fun ReportCard(userState: User) {
 @Composable
 fun activateCard(
     context: Context? = LocalContext.current,
-    width: Dp,
     height: Dp,
     backgroundColor: Color = Color.White,
     shadowElevation: Int? = 0,
@@ -228,14 +227,15 @@ fun activateCard(
     activityLocationViewModel: ActivityLocationViewModel = hiltViewModel(),
     cardType: CardType
 ) {
-
     val imageName = activate?.assets?.replace("R.drawable.", "")
-
     val imageResId = context?.resources?.getIdentifier(imageName, "drawable", context.packageName)
+
+    val screenWidth = LocalConfiguration.current.screenWidthDp.dp
+    val cardWidth = screenWidth * 0.9f
 
     Card (
         modifier = Modifier
-            .width(width)
+            .width(cardWidth)
             .height(height)
             .padding(top = 8.dp, start = 8.dp)
             .clickable(

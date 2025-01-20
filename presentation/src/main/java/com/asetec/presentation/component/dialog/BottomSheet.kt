@@ -81,7 +81,6 @@ fun ActivateBottomSheet(
                     jsonParseViewModel.activateJsonData.forEach { activate ->
                         activateCard(
                             context = context,
-                            width = 340.dp,
                             height = 60.dp,
                             activate = activate,
                             showBottomSheet = showBottomSheet,

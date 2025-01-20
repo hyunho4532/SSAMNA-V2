@@ -40,7 +40,7 @@ fun ProfileScreen(
         Row (
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(start = 12.dp, end = 12.dp),
+                .padding(start = 12.dp, end = 18.dp),
             horizontalArrangement = Arrangement.SpaceBetween
         ) {
             Text(
@@ -57,7 +57,6 @@ fun ProfileScreen(
         }
         activateData.value.forEach { activateDTO ->
             activateCard(
-                width = 348.dp,
                 height = 160.dp,
                 shadowElevation = 8,
                 activateDTO = activateDTO,
