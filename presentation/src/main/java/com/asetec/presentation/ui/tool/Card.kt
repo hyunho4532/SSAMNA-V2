@@ -2,6 +2,7 @@ package com.asetec.presentation.ui.tool
 
 import android.content.Context
 import android.net.Uri
+import android.widget.Toast
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.PickVisualMediaRequest
 import androidx.activity.result.contract.ActivityResultContracts
@@ -41,6 +42,7 @@ import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalConfiguration
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.Dp
@@ -49,7 +51,9 @@ import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import coil.compose.AsyncImage
 import com.asetec.domain.model.state.Activate
+import com.asetec.domain.model.state.ActivateDTO
 import com.asetec.domain.model.user.User
+import com.asetec.presentation.enum.CardType
 import com.asetec.presentation.viewmodel.ActivityLocationViewModel
 
 @Composable
@@ -214,17 +218,21 @@ fun ReportCard(userState: User) {
 
 @Composable
 fun activateCard(
-    context: Context,
+    context: Context? = LocalContext.current,
     width: Dp,
     height: Dp,
-    activate: Activate,
-    showBottomSheet: MutableState<Boolean>,
-    activityLocationViewModel: ActivityLocationViewModel = hiltViewModel()
+    backgroundColor: Color = Color.White,
+    shadowElevation: Int? = 0,
+    activate: Activate? = Activate(),
+    activateDTO: ActivateDTO? = ActivateDTO(),
+    showBottomSheet: MutableState<Boolean>? = mutableStateOf(false),
+    activityLocationViewModel: ActivityLocationViewModel = hiltViewModel(),
+    cardType: CardType
 ) {
 
-    val imageName = activate.assets.replace("R.drawable.", "")
+    val imageName = activate?.assets?.replace("R.drawable.", "")
 
-    val imageResId = context.resources.getIdentifier(imageName, "drawable", context.packageName)
+    val imageResId = context?.resources?.getIdentifier(imageName, "drawable", context.packageName)
 
     Card (
         modifier = Modifier
@@ -240,49 +248,105 @@ fun activateCard(
                     bounded = true
                 )
             ) {
-                showBottomSheet.value = false
-                activityLocationViewModel.getActivateName(
-                    activateResId = imageResId,
-                    activateName = activate.name
-                )
+                if (cardType == CardType.ActivateStatus.Activity) {
+                    showBottomSheet?.value = false
+                    activityLocationViewModel.getActivateName(
+                        activateResId = imageResId!!,
+                        activateName = activate!!.name
+                    )
+                } else {
+
+                }
             },
         colors = CardDefaults.cardColors(
-            containerColor = Color.White
+            containerColor = backgroundColor
+        ),
+        elevation = CardDefaults.cardElevation(
+            defaultElevation = shadowElevation!!.dp
         )
     ) {
+        if (cardType == CardType.ActivateStatus.Running) {
+            Row {
+                Text(
+                    text = activate!!.name,
+                    modifier = Modifier
+                        .padding(top = 4.dp, start = 4.dp)
+                )
 
-        Row {
+                Spacer(width = 4.dp, height = 0.dp)
+
+                Image(
+                    painter = painterResource(id = imageResId!!),
+                    contentDescription = "활동 종류 아이콘"
+                )
+            }
+
             Text(
-                text = activate.name,
+                text = activate!!.description,
                 modifier = Modifier
-                    .padding(top = 4.dp, start = 4.dp)
+                    .padding(top = 4.dp, start = 4.dp),
+                fontSize = 12.sp,
+                fontWeight = FontWeight.Light
             )
 
-            Spacer(width = 4.dp, height = 0.dp)
-
-            Image(
-                painter = painterResource(id = imageResId),
-                contentDescription = "활동 종류 아이콘"
-            )
-        }
-
-        Text(
-            text = activate.description,
-            modifier = Modifier
-                .padding(top = 4.dp, start = 4.dp),
-            fontSize = 12.sp,
-            fontWeight = FontWeight.Light
-        )
-
-        Box(
-            modifier = Modifier.padding(top = 4.dp)
-        ) {
-            Divider(
-                color = Color.Gray,
+            Box(
+                modifier = Modifier.padding(top = 4.dp)
+            ) {
+                Divider(
+                    color = Color.Gray,
+                    modifier = Modifier
+                        .height(1.dp)
+                        .fillMaxWidth()
+                )
+            }
+        } else {
+            Row(
                 modifier = Modifier
-                    .height(1.dp)
+                    .padding(top = 6.dp, start = 4.dp),
+                horizontalArrangement = Arrangement.Start,
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+
+                Image(
+                    modifier = Modifier
+                        .size(34.dp),
+                    painter = painterResource(id = activateDTO!!.statusIcon),
+                    contentDescription = "운동 했던 날 상태 아이콘"
+                )
+
+                Spacer(width = 8.dp, height = 0.dp)
+
+                Text(
+                    text = "${activateDTO.statusTitle} : ${activateDTO.goalCount}걸음!",
+                    fontWeight = FontWeight.Bold
+                )
+            }
+
+            Row (
+                modifier = Modifier
                     .fillMaxWidth()
-            )
+                    .padding(top = 12.dp),
+                horizontalArrangement = Arrangement.SpaceEvenly
+            ) {
+                Column (
+                    horizontalAlignment = Alignment.CenterHorizontally
+                ) {
+                    Text(text = "시간")
+                }
+                Column (
+                    horizontalAlignment = Alignment.CenterHorizontally
+                ) {
+                    Text(text = "칼로리")
+                    Text(
+                        text = "${activateDTO!!.kcal_cul}"
+                    )
+                }
+                Column (
+                    horizontalAlignment = Alignment.CenterHorizontally
+                ) {
+                    Text(text = "날짜")
+                }
+            }
         }
     }
 }

@@ -2,6 +2,7 @@ package com.asetec.presentation.enum
 
 sealed class CardType {
     sealed class ActivateStatus: CardType() {
-        data object 
+        data object Running: ActivateStatus()
+        data object Activity: ActivateStatus()
     }
 }

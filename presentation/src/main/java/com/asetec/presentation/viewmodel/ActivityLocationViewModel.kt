@@ -2,23 +2,17 @@ package com.asetec.presentation.viewmodel
 
 import android.annotation.SuppressLint
 import android.content.Context
-import android.hardware.SensorEventListener
-import android.util.Log
-import androidx.compose.runtime.State
-import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.asetec.domain.model.location.Location
 import com.asetec.domain.model.state.Activate
 import com.asetec.domain.model.state.ActivateDTO
 import com.asetec.domain.usecase.activate.ActivateCase
-import com.asetec.domain.usecase.sensor.SensorCase
 import com.google.android.gms.location.FusedLocationProviderClient
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -95,16 +89,17 @@ class ActivityLocationViewModel @Inject constructor(
         val pedometerCount = sharedPreferences.getInt("pedometerCount", _activates.value.pedometerCount)
         val googleId = sharedPreferences2.getString("id", "")
 
-        val activate = Activate (
+        val activateDTO = ActivateDTO (
             googleId = googleId!!,
-            runningTitle = _activates.value.runningTitle,
+            title = _activates.value.runningTitle,
             statusIcon = _activates.value.statusIcon,
-            statusName = _activates.value.statusName,
-            pedometerCount = pedometerCount
+            statusTitle = _activates.value.statusName,
+            goalCount = pedometerCount,
+            kcal_cul = pedometerCount * 0.05
         )
 
         viewModelScope.launch {
-            activateCase.saveActivity(activate = activate)
+            activateCase.saveActivity(activateDTO = activateDTO)
         }
     }
 

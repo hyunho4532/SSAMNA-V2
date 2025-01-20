@@ -1,6 +1,5 @@
 package com.asetec.data.repository.activate
 
-import com.asetec.domain.model.state.Activate
 import com.asetec.domain.model.state.ActivateDTO
 import com.asetec.domain.repository.activate.ActivateRepository
 import io.github.jan.supabase.postgrest.Postgrest
@@ -11,15 +10,17 @@ import javax.inject.Inject
 class ActivateRepositoryImpl @Inject constructor(
     private val postgrest: Postgrest
 ) : ActivateRepository {
-    override suspend fun insert(activate: Activate) {
-        val activateDTO = ActivateDTO(
-            googleId = activate.googleId,
-            status = activate.statusIcon,
-            title = activate.statusName,
-            goalCount = activate.pedometerCount
+    override suspend fun insert(activateDTO: ActivateDTO) {
+        val mappedActivateDTO = ActivateDTO(
+            googleId = activateDTO.googleId,
+            title = activateDTO.title,
+            statusIcon = activateDTO.statusIcon,
+            statusTitle = activateDTO.statusTitle,
+            goalCount = activateDTO.goalCount,
+            kcal_cul = activateDTO.kcal_cul
         )
 
-        postgrest.from("Activity").insert(activateDTO)
+        postgrest.from("Activity").insert(mappedActivateDTO)
     }
 
     override suspend fun selectActivateById(googleId: String): List<ActivateDTO> {

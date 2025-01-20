@@ -1,19 +1,28 @@
 package com.asetec.presentation.ui.main.home.screen
 
+import androidx.compose.foundation.Image
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
+import com.asetec.presentation.R
 import com.asetec.presentation.component.icon.SearchPrint
+import com.asetec.presentation.enum.CardType
+import com.asetec.presentation.ui.tool.activateCard
 import com.asetec.presentation.viewmodel.ActivityLocationViewModel
 
 @Composable
@@ -32,23 +41,31 @@ fun ProfileScreen(
         modifier = Modifier
             .padding(top = 12.dp, start = 12.dp)
     ) {
-        Row {
+        Row (
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(start = 12.dp, end = 12.dp),
+            horizontalArrangement = Arrangement.SpaceBetween
+        ) {
             Text(
-                text = "회원님의 활동 내역",
+                text = "활동 (${activateData.value.size})",
                 fontSize = 22.sp,
-                fontWeight = FontWeight.Bold
             )
 
-            Icon(
-                imageVector = SearchPrint,
+            Image(
+                modifier = Modifier
+                    .size(28.dp),
+                painter = painterResource(id = R.drawable.baseline_keyboard_arrow_right_24),
                 contentDescription = "활동 아이콘"
             )
         }
-        activateData.value.forEach { data ->
-            Text(
-                modifier = Modifier
-                    .padding(top = 16.dp),
-                text = data.title
+        activateData.value.forEach { activateDTO ->
+            activateCard(
+                width = 348.dp,
+                height = 120.dp,
+                shadowElevation = 8,
+                activateDTO = activateDTO,
+                cardType = CardType.ActivateStatus.Activity
             )
         }
     }

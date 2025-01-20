@@ -28,6 +28,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.asetec.domain.model.state.Activate
+import com.asetec.presentation.enum.CardType
 import com.asetec.presentation.ui.tool.activateCard
 import com.asetec.presentation.viewmodel.JsonParseViewModel
 import com.asetec.presentation.viewmodel.UserViewModel
@@ -85,7 +86,8 @@ fun ActivateBottomSheet(
                             width = 340.dp,
                             height = 60.dp,
                             activate = activate,
-                            showBottomSheet = showBottomSheet
+                            showBottomSheet = showBottomSheet,
+                            cardType = CardType.ActivateStatus.Running
                         )
                     }
                 }
