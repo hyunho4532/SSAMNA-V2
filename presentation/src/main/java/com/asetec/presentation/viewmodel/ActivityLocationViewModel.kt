@@ -10,6 +10,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.asetec.domain.model.location.Location
 import com.asetec.domain.model.state.Activate
+import com.asetec.domain.model.state.ActivateDTO
 import com.asetec.domain.usecase.activate.ActivateCase
 import com.asetec.domain.usecase.sensor.SensorCase
 import com.google.android.gms.location.FusedLocationProviderClient
@@ -17,6 +18,7 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -36,6 +38,10 @@ class ActivityLocationViewModel @Inject constructor(
     ))
 
     private val _activates = MutableStateFlow(Activate())
+
+    private val _activateData = MutableStateFlow<List<ActivateDTO>>(emptyList())
+
+    val activateData: StateFlow<List<ActivateDTO>> = _activateData
 
     val locations: StateFlow<Location> = _locations
     val activates: StateFlow<Activate> = _activates
@@ -100,5 +106,12 @@ class ActivityLocationViewModel @Inject constructor(
         viewModelScope.launch {
             activateCase.saveActivity(activate = activate)
         }
+    }
+
+    suspend fun selectActivityFindById() {
+        val googleId = sharedPreferences2.getString("id", "")
+        val activateDTO = activateCase.selectActivityFindById(googleId!!)
+
+        _activateData.value = activateDTO
     }
 }
