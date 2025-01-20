@@ -1,8 +1,7 @@
-package com.asetec.presentation.ui.tool
+package com.asetec.presentation.component.tool
 
 import android.content.Context
 import android.net.Uri
-import android.widget.Toast
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.PickVisualMediaRequest
 import androidx.activity.result.contract.ActivityResultContracts
@@ -309,23 +308,31 @@ fun activateCard(
 
                 Image(
                     modifier = Modifier
-                        .size(34.dp),
+                        .size(42.dp),
                     painter = painterResource(id = activateDTO!!.statusIcon),
                     contentDescription = "운동 했던 날 상태 아이콘"
                 )
 
                 Spacer(width = 8.dp, height = 0.dp)
 
-                Text(
-                    text = "${activateDTO.statusTitle} : ${activateDTO.goalCount}걸음!",
-                    fontWeight = FontWeight.Bold
-                )
+                Column {
+                    Text(
+                        text = activateDTO.todayFormat
+                    )
+
+                    Spacer(width = 0.dp, height = 4.dp)
+
+                    Text(
+                        text = "${activateDTO.statusTitle} : ${activateDTO.goalCount}걸음!",
+                        fontWeight = FontWeight.Bold
+                    )
+                }
             }
 
             Row (
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(top = 12.dp),
+                    .padding(top = 24.dp),
                 horizontalArrangement = Arrangement.SpaceEvenly
             ) {
                 Column (
@@ -344,7 +351,10 @@ fun activateCard(
                 Column (
                     horizontalAlignment = Alignment.CenterHorizontally
                 ) {
-                    Text(text = "날짜")
+                    Text(text = "km")
+                    Text(
+                        text = "${activateDTO!!.km_cul}"
+                    )
                 }
             }
         }

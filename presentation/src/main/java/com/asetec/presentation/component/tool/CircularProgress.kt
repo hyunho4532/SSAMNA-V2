@@ -1,4 +1,4 @@
-package com.asetec.presentation.ui.tool
+package com.asetec.presentation.component.tool
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row

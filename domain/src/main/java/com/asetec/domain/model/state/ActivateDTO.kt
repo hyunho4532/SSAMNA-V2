@@ -2,6 +2,7 @@ package com.asetec.domain.model.state
 
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
+import java.time.LocalDate
 
 @Serializable
 data class ActivateDTO(
@@ -21,5 +22,11 @@ data class ActivateDTO(
     val goalCount: Int = 0,
 
     @SerialName("kcal_cul")
-    val kcal_cul: Double = 0.0
+    val kcal_cul: Double = 0.0,
+
+    @SerialName("km_cul")
+    val km_cul: Double = 0.0,
+
+    @SerialName("today_format")
+    val todayFormat: String = ""
 )

@@ -22,12 +22,12 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.asetec.presentation.R
 import com.asetec.presentation.animation.SplashLoader
+import com.asetec.presentation.component.tool.CustomButton
+import com.asetec.presentation.component.tool.Spacer
 import com.asetec.presentation.enum.ButtonType
 import com.asetec.presentation.ui.responsive.setSubTitleFontSize
 import com.asetec.presentation.ui.responsive.setTitleFontSize
 import com.asetec.presentation.ui.responsive.setContentPadding
-import com.asetec.presentation.ui.tool.CustomButton
-import com.asetec.presentation.ui.tool.Spacer
 
 @Composable
 fun OnBoardingScreen(

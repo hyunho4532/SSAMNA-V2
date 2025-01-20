@@ -1,7 +1,6 @@
-package com.asetec.presentation.ui.tool
+package com.asetec.presentation.component.tool
 
 import android.content.Context
-import android.graphics.drawable.shapes.Shape
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.wrapContentSize

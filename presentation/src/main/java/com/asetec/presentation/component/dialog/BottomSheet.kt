@@ -27,11 +27,9 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
-import com.asetec.domain.model.state.Activate
+import com.asetec.presentation.component.tool.activateCard
 import com.asetec.presentation.enum.CardType
-import com.asetec.presentation.ui.tool.activateCard
 import com.asetec.presentation.viewmodel.JsonParseViewModel
-import com.asetec.presentation.viewmodel.UserViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable

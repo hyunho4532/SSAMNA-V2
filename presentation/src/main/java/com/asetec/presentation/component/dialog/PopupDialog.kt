@@ -41,17 +41,13 @@ import androidx.compose.ui.window.Dialog
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.asetec.presentation.R
 import com.asetec.presentation.component.row.BoxRow
-import com.asetec.presentation.component.util.nestedScrollConnection
+import com.asetec.presentation.component.tool.CustomButton
+import com.asetec.presentation.component.tool.Spacer
 import com.asetec.presentation.enum.ButtonType
-import com.asetec.presentation.ui.tool.CustomButton
-import com.asetec.presentation.ui.tool.Spacer
 import com.asetec.presentation.viewmodel.ActivityLocationViewModel
 import com.asetec.presentation.viewmodel.JsonParseViewModel
 import com.asetec.presentation.viewmodel.SensorManagerViewModel
-import com.google.android.gms.maps.model.LatLng
 import com.google.maps.android.compose.GoogleMap
-import com.google.maps.android.compose.Marker
-import com.google.maps.android.compose.MarkerState
 import com.google.maps.android.compose.rememberCameraPositionState
 
 @SuppressLint("StateFlowValueCalledInComposition")

@@ -17,7 +17,9 @@ class ActivateRepositoryImpl @Inject constructor(
             statusIcon = activateDTO.statusIcon,
             statusTitle = activateDTO.statusTitle,
             goalCount = activateDTO.goalCount,
-            kcal_cul = activateDTO.kcal_cul
+            kcal_cul = activateDTO.kcal_cul,
+            km_cul = activateDTO.km_cul,
+            todayFormat = activateDTO.todayFormat
         )
 
         postgrest.from("Activity").insert(mappedActivateDTO)

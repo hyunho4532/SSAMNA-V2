@@ -36,10 +36,9 @@ import com.asetec.domain.model.user.User
 import com.asetec.presentation.R
 import com.asetec.presentation.component.dialog.ActivateBottomSheet
 import com.asetec.presentation.component.dialog.TimeBottomSheet
+import com.asetec.presentation.component.tool.CustomButton
+import com.asetec.presentation.component.tool.Spacer
 import com.asetec.presentation.enum.ButtonType
-import com.asetec.presentation.ui.tool.CustomButton
-import com.asetec.presentation.ui.tool.Spacer
-import com.asetec.presentation.viewmodel.ActivityLocationViewModel
 import com.asetec.presentation.viewmodel.SensorManagerViewModel
 import com.asetec.presentation.viewmodel.UserViewModel
 

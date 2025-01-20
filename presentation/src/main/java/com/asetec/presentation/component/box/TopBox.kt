@@ -28,11 +28,9 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.asetec.presentation.component.icon.Footprint
+import com.asetec.presentation.component.tool.CustomButton
+import com.asetec.presentation.component.tool.Spacer
 import com.asetec.presentation.enum.ButtonType
-import com.asetec.data.service.SensorService
-import com.asetec.presentation.ui.tool.CustomButton
-import com.asetec.presentation.ui.tool.Spacer
-import com.asetec.presentation.viewmodel.ActivityLocationViewModel
 import com.asetec.presentation.viewmodel.SensorManagerViewModel
 
 /**
