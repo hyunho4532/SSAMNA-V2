@@ -127,7 +127,6 @@ fun HomeScreen(
             }
 
             if (activates.activateButtonName == "측정 중!" || sensorManagerViewModel.getSavedIsRunningState()) {
-                Log.d("HomeScreen", sensorManagerViewModel.getSavedIsRunningState().toString())
                 TopBox(context)
             }
 

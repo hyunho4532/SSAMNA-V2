@@ -6,13 +6,12 @@ import java.time.LocalDate
 import java.time.ZoneId
 import java.time.ZonedDateTime
 import java.time.format.DateTimeFormatter
+import kotlin.math.roundToInt
 
 data object FormatChildren : Format() {
     @RequiresApi(Build.VERSION_CODES.O)
     override fun todayFormatDate(): String {
-
         val currentDateTime = ZonedDateTime.now(ZoneId.of("Asia/Seoul"))
-
         val formatter = DateTimeFormatter.ofPattern("yyyy년 M월 d일 a h:mm")
 
         return currentDateTime.format(formatter)
@@ -24,6 +23,6 @@ data object FormatChildren : Format() {
          */
         val stepLengthInKm = 0.75 / 1000.0
 
-        return stepLengthInKm * steps
+        return ((stepLengthInKm * steps) * 100.0).roundToInt() / 100.0
     }
 }

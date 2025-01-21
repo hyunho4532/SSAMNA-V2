@@ -13,8 +13,7 @@ class LocationReceiver : BroadcastReceiver() {
         val location = intent.getParcelableExtra<Location>("location")
 
         if (location != null) {
-            Log.d("LocationReceiver", "위치: ${location.latitude
-            }, ${location.longitude}")
+            Log.d("LocationReceiver", "위치: ${location.latitude}, ${location.longitude}")
         }
     }
 }

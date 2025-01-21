@@ -44,6 +44,7 @@ fun TopBox(
 
     val activates = sensorManagerViewModel.activates.collectAsState()
 
+
     val sensorManager = remember {
         context.getSystemService(Context.SENSOR_SERVICE) as SensorManager
     }
@@ -58,14 +59,14 @@ fun TopBox(
         val listener = sensorManagerViewModel.sensorEventListener()
 
         stepDetector?.let {
+            sensorManager.unregisterListener(listener)
             sensorManager.registerListener(listener, it, SensorManager.SENSOR_DELAY_UI)
         }
 
         onDispose {
+            sensorManager.unregisterListener(listener)
+
             sensorManagerViewModel.setSavedSensorState()
-            stepDetector?.let {
-                sensorManager.registerListener(listener, it, SensorManager.SENSOR_DELAY_UI)
-            }
         }
     }
     

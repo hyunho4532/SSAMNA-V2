@@ -39,6 +39,8 @@ class SensorManagerViewModel @Inject constructor(
     }
 
     fun stopService(context: Context, runningStatus: Boolean, isRunning: Boolean) {
+        sharedPreferences.edit().putInt("pedometerCount", 0).apply()
+
         sensorManagerCase.stopService(context = context)
 
         _activates.update {
@@ -50,11 +52,6 @@ class SensorManagerViewModel @Inject constructor(
         }
 
         sharedPreferences.edit().putBoolean("showRunning", isRunning).apply()
-
-        /**
-         * 측정이 완료되었으므로, 걸음을 0으로 초기화한다.
-         */
-        initSavedSensorState()
     }
 
     fun sensorEventListener(): SensorEventListener {
@@ -77,9 +74,5 @@ class SensorManagerViewModel @Inject constructor(
 
     fun setSavedSensorState() {
         sharedPreferences.edit().putInt("pedometerCount", _activates.value.pedometerCount).apply()
-    }
-
-    fun initSavedSensorState() {
-        sharedPreferences.edit().putInt("pedometerCount", 0).apply()
     }
 }

@@ -1,6 +1,7 @@
 package com.asetec.presentation.component.tool
 
 import android.content.Context
+import android.os.Build
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.wrapContentSize
@@ -55,7 +56,9 @@ fun CustomButton(
                         )
                     }
                     ButtonType.RunningStatus.INSERT -> {
-                        activityLocationViewModel.saveActivity()
+                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                            activityLocationViewModel.saveActivity()
+                        }
                     }
                     else -> {
                         sensorManagerViewModel.startService(context!!, true)

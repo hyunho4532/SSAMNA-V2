@@ -5,8 +5,12 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -17,6 +21,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.asetec.presentation.R
+import com.asetec.presentation.component.tool.Spacer
 import com.asetec.presentation.component.tool.activateCard
 import com.asetec.presentation.enum.CardType
 import com.asetec.presentation.viewmodel.ActivityLocationViewModel
@@ -55,12 +60,39 @@ fun ProfileScreen(
                 contentDescription = "활동 아이콘"
             )
         }
-        activateData.value.forEach { activateDTO ->
-            activateCard(
-                height = 160.dp,
-                shadowElevation = 8,
-                activateDTO = activateDTO,
-                cardType = CardType.ActivateStatus.Activity
+        Column (
+            modifier = Modifier
+                .height(320.dp)
+                .verticalScroll(rememberScrollState())
+        ) {
+            activateData.value.forEach { activateDTO ->
+                activateCard(
+                    height = 160.dp,
+                    borderStroke = 2,
+                    activateDTO = activateDTO,
+                    cardType = CardType.ActivateStatus.Activity
+                )
+            }
+        }
+
+        Spacer(width = 0.dp, height = 24.dp)
+
+        Row (
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(start = 12.dp, end = 18.dp),
+            horizontalArrangement = Arrangement.SpaceBetween
+        ) {
+            Text(
+                text = "목표 (1)",
+                fontSize = 22.sp,
+            )
+
+            Image(
+                modifier = Modifier
+                    .size(28.dp),
+                painter = painterResource(id = R.drawable.baseline_add_24),
+                contentDescription = "추가 아이콘"
             )
         }
     }

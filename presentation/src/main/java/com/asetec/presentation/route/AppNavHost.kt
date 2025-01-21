@@ -4,6 +4,8 @@ import android.content.Context
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.platform.LocalContext
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
@@ -79,8 +81,13 @@ fun AppNavHost() {
 fun ScreenNavigationConfiguration(
     navController: NavHostController,
     context: Context,
+    onScreenChange: (String) -> Unit,
     userViewModel: UserViewModel = hiltViewModel()
 ) {
+
+    val isClickable = remember {
+        mutableStateOf(true)
+    }
 
     val userList = userViewModel.user.collectAsState()
     val fusedLocationClient = LocationServices.getFusedLocationProviderClient(context)
@@ -93,6 +100,7 @@ fun ScreenNavigationConfiguration(
     NavHost(navController = navController, startDestination = Screens.HomeScreen.route) {
 
         composable(Screens.HomeScreen.route) {
+            onScreenChange(Screens.HomeScreen.route)
             HomeScreen(
                 fusedLocationClient = fusedLocationClient,
                 context = context,
@@ -100,11 +108,15 @@ fun ScreenNavigationConfiguration(
             )
         }
 
-        composable(Screens.AnalyzeScreen.route) {
-            AnalyzeScreen()
+        if (isClickable.value) {
+            composable(Screens.AnalyzeScreen.route) {onScreenChange(Screens.HomeScreen.route)
+                onScreenChange(Screens.AnalyzeScreen.route)
+                AnalyzeScreen()
+            }
         }
 
         composable(Screens.ProfileScreen.route) {
+            onScreenChange(Screens.ProfileScreen.route)
             ProfileScreen()
         }
 

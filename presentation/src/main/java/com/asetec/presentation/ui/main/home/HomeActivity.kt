@@ -26,7 +26,7 @@ class HomeActivity : ComponentActivity() {
                     value = LocalDensity provides Density(
                         density = LocalDensity.current.density,
                         fontScale = 1f
-                    )
+                    ),
                 ) {
                     RootScreen()
                 }

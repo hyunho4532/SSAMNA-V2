@@ -5,6 +5,7 @@ import android.net.Uri
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.PickVisualMediaRequest
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
@@ -22,6 +23,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.ripple.rememberRipple
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
@@ -220,7 +222,7 @@ fun activateCard(
     context: Context? = LocalContext.current,
     height: Dp,
     backgroundColor: Color = Color.White,
-    shadowElevation: Int? = 0,
+    borderStroke: Int? = 0,
     activate: Activate? = Activate(),
     activateDTO: ActivateDTO? = ActivateDTO(),
     showBottomSheet: MutableState<Boolean>? = mutableStateOf(false),
@@ -260,9 +262,7 @@ fun activateCard(
         colors = CardDefaults.cardColors(
             containerColor = backgroundColor
         ),
-        elevation = CardDefaults.cardElevation(
-            defaultElevation = shadowElevation!!.dp
-        )
+        border = BorderStroke(borderStroke!!.dp, Color.Gray)
     ) {
         if (cardType == CardType.ActivateStatus.Running) {
             Row {
