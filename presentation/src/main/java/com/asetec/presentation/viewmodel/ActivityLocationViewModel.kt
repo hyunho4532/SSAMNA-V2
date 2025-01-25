@@ -11,6 +11,7 @@ import com.asetec.domain.model.state.Activate
 import com.asetec.domain.model.state.ActivateDTO
 import com.asetec.domain.usecase.activate.ActivateCase
 import com.asetec.presentation.ui.util.FormatChildren
+import com.asetec.presentation.ui.util.formatTime
 import com.google.android.gms.location.FusedLocationProviderClient
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dagger.hilt.android.qualifiers.ApplicationContext
@@ -98,6 +99,7 @@ class ActivityLocationViewModel @Inject constructor(
             title = _activates.value.runningTitle,
             statusIcon = _activates.value.statusIcon,
             statusTitle = _activates.value.statusName,
+            time = formatTime(_activates.value.time),
             goalCount = pedometerCount,
             kcal_cul = pedometerCount * 0.05,
             km_cul = FormatChildren.calculateDistanceToKm(pedometerCount),

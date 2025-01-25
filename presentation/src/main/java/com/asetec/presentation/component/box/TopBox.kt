@@ -60,13 +60,7 @@ fun TopBox(
 
     LaunchedEffect(key1 = Unit) {
         sensorManagerViewModel.getSavedSensorState()
-    }
-
-    LaunchedEffect(key1 = Unit) {
-        while (isActive) {
-            delay(1000)
-            activates.value.time++
-        }
+        sensorManagerViewModel.getSavedTimeState()
     }
 
     DisposableEffect(Unit) {
@@ -75,6 +69,7 @@ fun TopBox(
         stepDetector?.let {
             sensorManager.unregisterListener(listener)
             sensorManager.registerListener(listener, it, SensorManager.SENSOR_DELAY_UI)
+            sensorManagerViewModel.startWatch()
         }
 
         onDispose {

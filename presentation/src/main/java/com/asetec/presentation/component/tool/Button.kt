@@ -62,6 +62,7 @@ fun CustomButton(
                     }
                     else -> {
                         sensorManagerViewModel.startService(context!!, true)
+                        sensorManagerViewModel.startWatch()
                     }
                 }
             }

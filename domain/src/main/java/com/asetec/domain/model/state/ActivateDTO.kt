@@ -20,6 +20,9 @@ data class ActivateDTO(
     @SerialName("goal_count")
     val goalCount: Int = 0,
 
+    @SerialName("time")
+    val time: String = "",
+
     @SerialName("kcal_cul")
     val kcal_cul: Double = 0.0,
 
