@@ -1,13 +1,17 @@
 package com.asetec.presentation.ui.main.home
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableIntStateOf
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.navigation.compose.rememberNavController
@@ -19,6 +23,17 @@ import com.asetec.presentation.route.ScreenNavigationConfiguration
 
 @Composable
 fun RootScreen() {
+
+    val isClickable = remember {
+        mutableStateOf(true)
+    }
+
+    val isTabClickable: (String) -> Boolean = { route ->
+        when (route) {
+            Screens.AnalyzeScreen.route -> false
+            else -> true
+        }
+    }
 
     val context = LocalContext.current
 
@@ -50,16 +65,23 @@ fun RootScreen() {
             BottomNavigationBar(
                 items = bottomNavigationItems,
                 currentIndex = currentIndex,
-                navController = navController
+                navController = navController,
+                isTabClickable = isTabClickable
             )
         }
     ) { innerPadding ->
-        Box(modifier = Modifier
-            .fillMaxSize()
-            .padding(innerPadding)) {
+        Box(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(innerPadding)
+                .background(Color.White)
+        ) {
             ScreenNavigationConfiguration(
                 navController = navController,
-                context = context
+                context = context,
+                onScreenChange = { route ->
+                    isClickable.value = route != Screens.ProfileScreen.route
+                }
             )
         }
     }

@@ -28,9 +28,9 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.asetec.domain.model.user.User
+import com.asetec.presentation.component.tool.ReportCard
 import com.asetec.presentation.ui.main.home.HomeActivity
 import com.asetec.presentation.ui.responsive.setUpButtonWidth
-import com.asetec.presentation.ui.tool.ReportCard
 import com.asetec.presentation.component.util.getDPI
 import com.asetec.presentation.viewmodel.UserViewModel
 

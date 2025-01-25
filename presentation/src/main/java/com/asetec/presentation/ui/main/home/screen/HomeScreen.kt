@@ -38,7 +38,7 @@ import com.asetec.domain.model.user.User
 import com.asetec.presentation.component.aside.HomeAside
 import com.asetec.presentation.component.box.TopBox
 import com.asetec.presentation.component.dialog.ShowCompleteDialog
-import com.asetec.presentation.ui.tool.CircularProgress
+import com.asetec.presentation.component.tool.CircularProgress
 import com.asetec.presentation.viewmodel.ActivityLocationViewModel
 import com.asetec.presentation.viewmodel.SensorManagerViewModel
 import com.google.accompanist.permissions.ExperimentalPermissionsApi
@@ -127,7 +127,6 @@ fun HomeScreen(
             }
 
             if (activates.activateButtonName == "측정 중!" || sensorManagerViewModel.getSavedIsRunningState()) {
-                Log.d("HomeScreen", sensorManagerViewModel.getSavedIsRunningState().toString())
                 TopBox(context)
             }
 

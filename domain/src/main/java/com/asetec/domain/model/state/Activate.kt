@@ -40,6 +40,11 @@ data class Activate(
     /**
      *
      */
-    var runningTitle: String = ""
+    var runningTitle: String = "",
+
+    /**
+     * 시간
+     */
+    var time: Long = 0L
 
 ): ActivityType

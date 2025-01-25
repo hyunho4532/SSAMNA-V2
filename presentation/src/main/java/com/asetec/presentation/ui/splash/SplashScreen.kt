@@ -13,7 +13,7 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.asetec.presentation.R
 import com.asetec.presentation.animation.SplashLoader
-import com.asetec.presentation.ui.tool.CircularProgress
+import com.asetec.presentation.component.tool.CircularProgress
 import kotlinx.coroutines.delay
 
 @Composable

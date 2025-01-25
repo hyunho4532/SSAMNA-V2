@@ -29,9 +29,9 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.asetec.presentation.R
 import com.asetec.presentation.api.GoogleApiContract
+import com.asetec.presentation.component.tool.CustomCard
+import com.asetec.presentation.component.tool.Spacer
 import com.asetec.presentation.ui.responsive.setTopPadding
-import com.asetec.presentation.ui.tool.CustomCard
-import com.asetec.presentation.ui.tool.Spacer
 import com.asetec.presentation.viewmodel.UserViewModel
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json

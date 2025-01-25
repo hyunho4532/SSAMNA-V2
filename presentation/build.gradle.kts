@@ -52,6 +52,8 @@ android {
 }
 
 dependencies {
+    implementation("androidx.graphics:graphics-shapes:1.0.1")
+    implementation("com.exyte:animated-navigation-bar:1.0.0")
     implementation("androidx.work:work-runtime-ktx:2.7.0")
     implementation ("com.github.PratikFagadiya:AnimatedSmoothBottomNavigation-JetpackCompose:1.1.2")
     implementation("com.google.maps.android:maps-compose:2.11.1")

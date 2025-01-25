@@ -27,10 +27,9 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
-import com.asetec.domain.model.state.Activate
-import com.asetec.presentation.ui.tool.activateCard
+import com.asetec.presentation.component.tool.activateCard
+import com.asetec.presentation.enum.CardType
 import com.asetec.presentation.viewmodel.JsonParseViewModel
-import com.asetec.presentation.viewmodel.UserViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -82,10 +81,10 @@ fun ActivateBottomSheet(
                     jsonParseViewModel.activateJsonData.forEach { activate ->
                         activateCard(
                             context = context,
-                            width = 340.dp,
                             height = 60.dp,
                             activate = activate,
-                            showBottomSheet = showBottomSheet
+                            showBottomSheet = showBottomSheet,
+                            cardType = CardType.ActivateStatus.Running
                         )
                     }
                 }
@@ -150,6 +149,43 @@ fun TimeBottomSheet(
                         }
                     )
                 }
+            }
+        }
+    }
+}
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun ChallengeBottomSheet(
+    context: Context,
+    showBottomSheet: MutableState<Boolean>,
+    sheetState: SheetState,
+    jsonParseViewModel: JsonParseViewModel = hiltViewModel()
+) {
+
+    var dataIsLoading by remember {
+        mutableStateOf(false)
+    }
+
+    LaunchedEffect(key1 = Unit) {
+        if (jsonParseViewModel.challengeJsonData.isEmpty()) {
+            jsonParseViewModel.activateJsonParse("challenge.json", "challenge")
+        }
+        dataIsLoading = true
+    }
+
+    if (showBottomSheet.value) {
+        ModalBottomSheet(
+            modifier = Modifier
+                .fillMaxSize(),
+            sheetState = sheetState,
+            onDismissRequest = { showBottomSheet.value = false },
+            containerColor = Color.White
+        ) {
+            jsonParseViewModel.challengeJsonData.forEach {
+                Text(
+                    text = it.name
+                )
             }
         }
     }
