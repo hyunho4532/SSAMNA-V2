@@ -2,6 +2,7 @@ package com.asetec.presentation.component.tool
 
 import android.content.Context
 import android.os.Build
+import android.widget.Toast
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.wrapContentSize
@@ -49,12 +50,16 @@ fun CustomButton(
             } else {
                 when (type) {
                     ButtonType.RunningStatus.FINISH -> {
-                        sensorManagerViewModel.stopService(
-                            context = context!!,
-                            runningStatus = true,
-                            isRunning = false
-                        )
-                        sensorManagerViewModel.stopWatch()
+                        if (sensorManagerViewModel.getSavedSensorState() > 100) {
+                            sensorManagerViewModel.stopService(
+                                context = context!!,
+                                runningStatus = true,
+                                isRunning = false
+                            )
+                            sensorManagerViewModel.stopWatch()
+                        } else {
+                            Toast.makeText(context, "최소 100보 이상은 걸어야 합니다!", Toast.LENGTH_SHORT).show()
+                        }
                     }
                     ButtonType.RunningStatus.INSERT -> {
                         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {

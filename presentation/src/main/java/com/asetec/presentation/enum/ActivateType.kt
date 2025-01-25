@@ -6,3 +6,9 @@ sealed class CardType {
         data object Activity: ActivateStatus()
     }
 }
+
+sealed class ProfileStatusType  {
+    data object Activate: ProfileStatusType()
+    data object Kcal: ProfileStatusType()
+    data object Goal: ProfileStatusType()
+}

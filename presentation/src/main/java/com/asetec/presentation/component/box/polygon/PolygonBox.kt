@@ -20,6 +20,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.graphics.shapes.CornerRounding
 import androidx.graphics.shapes.RoundedPolygon
+import com.asetec.presentation.enum.ProfileStatusType
 
 /**
  * 다각형 박스
@@ -27,7 +28,9 @@ import androidx.graphics.shapes.RoundedPolygon
 @Composable
 fun PolygonBox(
     title: String,
-    activateCount: Int = 0
+    activateCount: Int = 0,
+    sumKcal: Double = 0.0,
+    profileStatusType: ProfileStatusType
 ) {
 
     val hexagon = remember {
@@ -58,7 +61,11 @@ fun PolygonBox(
             )
 
             Text(
-                text = activateCount.toString(),
+                text = when (profileStatusType) {
+                    ProfileStatusType.Activate -> activateCount.toString()
+                    ProfileStatusType.Kcal -> sumKcal.toString()
+                    else -> "0"
+                },
                 color = MaterialTheme.colorScheme.onSecondary,
                 fontWeight = FontWeight.Bold,
                 fontSize = 16.sp
