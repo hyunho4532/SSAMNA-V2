@@ -7,8 +7,10 @@ import javax.inject.Inject
 class ActivateCase @Inject constructor(
     private val activateRepository: ActivateRepository
 ) {
-    suspend fun saveActivity(activateDTO: ActivateDTO) {
-        activateRepository.insert(activateDTO)
+    suspend fun saveActivity(activateDTO: ActivateDTO, onTime: (Long) -> Unit) {
+        activateRepository.insert(activateDTO) {
+            onTime(it)
+        }
     }
 
     suspend fun selectActivityFindById(googleId: String) : List<ActivateDTO> {

@@ -44,6 +44,7 @@ class SensorManagerViewModel @Inject constructor(
         }
 
         sharedPreferences.edit().putBoolean("showRunning", isRunning).apply()
+        sharedPreferences.edit().putString("activateButtonName", _activates.value.activateButtonName).apply()
     }
 
     fun stopService(context: Context, runningStatus: Boolean, isRunning: Boolean) {
@@ -60,6 +61,7 @@ class SensorManagerViewModel @Inject constructor(
         }
 
         sharedPreferences.edit().putBoolean("showRunning", isRunning).apply()
+        sharedPreferences.edit().putString("activateButtonName", _activates.value.activateButtonName).apply()
     }
 
     fun sensorEventListener(): SensorEventListener {
@@ -74,6 +76,10 @@ class SensorManagerViewModel @Inject constructor(
 
     fun getSavedSensorState(): Int {
         return sharedPreferences.getInt("pedometerCount", _activates.value.pedometerCount)
+    }
+
+    fun getSavedButtonNameState(): String? {
+        return sharedPreferences.getString("activateButtonName", _activates.value.activateButtonName)
     }
 
     fun getSavedTimeState(): Long {

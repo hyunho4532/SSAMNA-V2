@@ -339,6 +339,9 @@ fun activateCard(
                     horizontalAlignment = Alignment.CenterHorizontally
                 ) {
                     Text(text = "시간")
+                    Text(
+                        text = activateDTO!!.time
+                    )
                 }
                 Column (
                     horizontalAlignment = Alignment.CenterHorizontally
@@ -357,6 +360,13 @@ fun activateCard(
                     )
                 }
             }
+
+            Text(
+                modifier = Modifier
+                    .padding(top = 18.dp, end = 8.dp)
+                    .align(Alignment.End),
+                text = activateDTO!!.title,
+            )
         }
     }
 }

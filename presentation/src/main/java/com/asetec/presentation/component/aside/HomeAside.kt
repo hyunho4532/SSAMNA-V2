@@ -202,7 +202,7 @@ fun HomeAside(
             type = ButtonType.RunningStatus.OPEN,
             width = 110.dp,
             height = 36.dp,
-            text = activates.activateButtonName,
+            text = sensorManagerViewModel.getSavedButtonNameState()!!,
             showIcon = false,
             backgroundColor = Color(0xFF5c9afa),
             navController = null,

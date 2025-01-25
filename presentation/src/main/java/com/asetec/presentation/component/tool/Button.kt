@@ -54,6 +54,7 @@ fun CustomButton(
                             runningStatus = true,
                             isRunning = false
                         )
+                        sensorManagerViewModel.stopWatch()
                     }
                     ButtonType.RunningStatus.INSERT -> {
                         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {

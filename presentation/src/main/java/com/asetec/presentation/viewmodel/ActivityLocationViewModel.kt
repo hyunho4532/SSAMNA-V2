@@ -3,6 +3,7 @@ package com.asetec.presentation.viewmodel
 import android.annotation.SuppressLint
 import android.content.Context
 import android.os.Build
+import android.util.Log
 import androidx.annotation.RequiresApi
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -93,13 +94,14 @@ class ActivityLocationViewModel @Inject constructor(
     fun saveActivity() {
         val pedometerCount = sharedPreferences.getInt("pedometerCount", _activates.value.pedometerCount)
         val googleId = sharedPreferences2.getString("id", "")
+        val time = sharedPreferences.getLong("time", _activates.value.time)
 
         val activateDTO = ActivateDTO (
             googleId = googleId!!,
             title = _activates.value.runningTitle,
             statusIcon = _activates.value.statusIcon,
             statusTitle = _activates.value.statusName,
-            time = formatTime(_activates.value.time),
+            time = formatTime(time),
             goalCount = pedometerCount,
             kcal_cul = pedometerCount * 0.05,
             km_cul = FormatChildren.calculateDistanceToKm(pedometerCount),
@@ -107,7 +109,10 @@ class ActivityLocationViewModel @Inject constructor(
         )
 
         viewModelScope.launch {
-            activateCase.saveActivity(activateDTO = activateDTO)
+            activateCase.saveActivity(activateDTO = activateDTO) {
+                Log.d("ActivityLocationViewModel", it.toString())
+                sharedPreferences.edit().putLong("time", it).apply()
+            }
         }
     }
 

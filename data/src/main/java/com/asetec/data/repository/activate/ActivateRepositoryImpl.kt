@@ -10,7 +10,7 @@ import javax.inject.Inject
 class ActivateRepositoryImpl @Inject constructor(
     private val postgrest: Postgrest
 ) : ActivateRepository {
-    override suspend fun insert(activateDTO: ActivateDTO) {
+    override suspend fun insert(activateDTO: ActivateDTO, onTime: (Long) -> Unit) {
         val mappedActivateDTO = ActivateDTO(
             googleId = activateDTO.googleId,
             title = activateDTO.title,
@@ -24,6 +24,8 @@ class ActivateRepositoryImpl @Inject constructor(
         )
 
         postgrest.from("Activity").insert(mappedActivateDTO)
+
+        onTime(0L)
     }
 
     override suspend fun selectActivateById(googleId: String): List<ActivateDTO> {
