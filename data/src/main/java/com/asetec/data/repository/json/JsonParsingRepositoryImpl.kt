@@ -4,6 +4,7 @@ import android.content.Context
 import android.content.res.AssetManager
 import com.asetec.domain.model.state.Activate
 import com.asetec.domain.model.state.ActivityType
+import com.asetec.domain.model.state.Challenge
 import com.asetec.domain.model.state.Running
 import com.asetec.domain.repository.json.JsonParsingRepository
 import com.google.gson.Gson
@@ -20,10 +21,16 @@ class JsonParsingRepositoryImpl @Inject constructor(
 
     override fun jsonParse(jsonFile: String, type: String, onType: (String) -> Unit): List<ActivityType> {
 
-        val listType = if (type == "activate") {
-            object : TypeToken<List<Activate>>() {}.type
-        } else {
-            object : TypeToken<List<Running>>() {}.type
+        val listType = when (type) {
+            "activate" -> {
+                object : TypeToken<List<Activate>>() {}.type
+            }
+            "running" -> {
+                object : TypeToken<List<Running>>() {}.type
+            }
+            else -> {
+                object : TypeToken<List<Challenge>>() {}.type
+            }
         }
 
         val assetManager: AssetManager = context.assets

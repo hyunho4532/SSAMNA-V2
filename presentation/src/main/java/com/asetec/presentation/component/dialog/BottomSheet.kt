@@ -153,3 +153,40 @@ fun TimeBottomSheet(
         }
     }
 }
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun ChallengeBottomSheet(
+    context: Context,
+    showBottomSheet: MutableState<Boolean>,
+    sheetState: SheetState,
+    jsonParseViewModel: JsonParseViewModel = hiltViewModel()
+) {
+
+    var dataIsLoading by remember {
+        mutableStateOf(false)
+    }
+
+    LaunchedEffect(key1 = Unit) {
+        if (jsonParseViewModel.challengeJsonData.isEmpty()) {
+            jsonParseViewModel.activateJsonParse("challenge.json", "challenge")
+        }
+        dataIsLoading = true
+    }
+
+    if (showBottomSheet.value) {
+        ModalBottomSheet(
+            modifier = Modifier
+                .fillMaxSize(),
+            sheetState = sheetState,
+            onDismissRequest = { showBottomSheet.value = false },
+            containerColor = Color.White
+        ) {
+            jsonParseViewModel.challengeJsonData.forEach {
+                Text(
+                    text = it.name
+                )
+            }
+        }
+    }
+}

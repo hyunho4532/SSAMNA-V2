@@ -118,6 +118,7 @@ fun ScreenNavigationConfiguration(
         composable(Screens.ProfileScreen.route) {
             onScreenChange(Screens.ProfileScreen.route)
             ProfileScreen(
+                context = context,
                 userList = userList
             )
         }
