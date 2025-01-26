@@ -1,6 +1,7 @@
 package com.asetec.presentation.component.dialog
 
 import android.content.Context
+import android.util.Log
 import android.widget.Toast
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -162,7 +163,8 @@ fun ChallengeBottomSheet(
     context: Context,
     showBottomSheet: MutableState<Boolean>,
     sheetState: SheetState,
-    jsonParseViewModel: JsonParseViewModel = hiltViewModel()
+    jsonParseViewModel: JsonParseViewModel = hiltViewModel(),
+    challengeDataTitle: List<String>
 ) {
 
     var dataIsLoading by remember {
@@ -200,12 +202,14 @@ fun ChallengeBottomSheet(
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
                 jsonParseViewModel.challengeJsonData.forEach { challenge ->
-                    challengeCard(
-                        challenge = challenge,
-                        height = 80.dp,
-                    ) { index, isPopup ->
-                        challengeIndex.intValue = index
-                        isChallengeIsPopup.value = isPopup
+                    if (!challengeDataTitle.contains(challenge.name)) {
+                        challengeCard(
+                            challenge = challenge,
+                            height = 80.dp,
+                        ) { index, isPopup ->
+                            challengeIndex.intValue = index
+                            isChallengeIsPopup.value = isPopup
+                        }
                     }
                 }
             }

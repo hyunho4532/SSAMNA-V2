@@ -10,4 +10,8 @@ class ChallengeCase @Inject constructor(
     suspend fun saveChallenge(challengeDTO: ChallengeDTO) {
         challengeRepository.insert(challengeDTO)
     }
+
+    suspend fun selectChallengeFindById(googleId: String) : List<ChallengeDTO> {
+        return challengeRepository.selectChallengeFindById(googleId)
+    }
 }

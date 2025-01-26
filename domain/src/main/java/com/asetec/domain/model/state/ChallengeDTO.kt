@@ -10,5 +10,8 @@ data class ChallengeDTO(
     val googleId: String = "",
 
     @SerialName("title")
-    val title: String = ""
+    val title: String = "",
+
+    @SerialName("today_date")
+    val todayDate: String = ""
 )

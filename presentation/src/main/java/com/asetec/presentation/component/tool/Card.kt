@@ -53,6 +53,7 @@ import coil.compose.AsyncImage
 import com.asetec.domain.model.state.Activate
 import com.asetec.domain.model.state.ActivateDTO
 import com.asetec.domain.model.state.Challenge
+import com.asetec.domain.model.state.ChallengeDTO
 import com.asetec.domain.model.user.User
 import com.asetec.presentation.R
 import com.asetec.presentation.component.dialog.ShowChallengeDialog
@@ -431,6 +432,56 @@ fun challengeCard(
                 Text(
                     text = challenge.description,
                     fontSize = 12.sp,
+                )
+            }
+        }
+    }
+}
+
+@Composable
+fun challengeRegistrationCard(
+    challengeDTO: ChallengeDTO,
+    height: Dp
+) {
+    val screenWidth = LocalConfiguration.current.screenWidthDp.dp
+    val cardWidth = screenWidth * 0.9f
+
+    Card (
+        modifier = Modifier
+            .width(cardWidth)
+            .height(height)
+            .padding(top = 8.dp, start = 8.dp)
+            .clickable(
+                interactionSource = remember {
+                    MutableInteractionSource()
+                },
+                indication = rememberRipple(
+                    color = Color.Gray,
+                    bounded = true
+                )
+            ) {
+            },
+        colors = CardDefaults.cardColors(
+            containerColor = Color.White
+        ),
+        border = BorderStroke(2.dp, Color.Gray)
+    ) {
+        Box(
+            modifier = Modifier
+                .padding(top = 8.dp, start = 4.dp)
+        ) {
+            Column(
+                modifier = Modifier.fillMaxSize()
+            ) {
+                Text(
+                    text = challengeDTO.title,
+                    fontSize = 16.sp,
+                    fontWeight = FontWeight.Bold
+                )
+
+                Text(
+                    text = challengeDTO.todayDate,
+                    fontSize = 14.sp
                 )
             }
         }

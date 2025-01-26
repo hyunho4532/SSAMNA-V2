@@ -40,19 +40,27 @@ import com.asetec.presentation.component.box.polygon.PolygonBox
 import com.asetec.presentation.component.dialog.ChallengeBottomSheet
 import com.asetec.presentation.component.tool.Spacer
 import com.asetec.presentation.component.tool.activateCard
+import com.asetec.presentation.component.tool.challengeRegistrationCard
 import com.asetec.presentation.enum.CardType
 import com.asetec.presentation.enum.ProfileStatusType
 import com.asetec.presentation.viewmodel.ActivityLocationViewModel
+import com.asetec.presentation.viewmodel.ChallengeViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ProfileScreen(
     activityLocationViewModel: ActivityLocationViewModel = hiltViewModel(),
+    challengeViewModel: ChallengeViewModel = hiltViewModel(),
     userList: State<User>,
     context: Context
 ) {
 
     val activateData  = activityLocationViewModel.activateData.collectAsState()
+    val challengeData = challengeViewModel.challengeData.collectAsState()
+
+    val challengeDataTitle: List<String> = challengeData.value.map {
+        it.title
+    }
 
     var sumKcal by remember {
         mutableDoubleStateOf(0.0)
@@ -68,6 +76,7 @@ fun ProfileScreen(
 
     LaunchedEffect(key1 = Unit) {
         activityLocationViewModel.selectActivityFindById()
+        challengeViewModel.selectChallengeById()
     }
 
     LaunchedEffect(key1 = activateData.value) {
@@ -188,12 +197,12 @@ fun ProfileScreen(
                         bounded = true
                     )
                 ) {
-                  showChallengeBottomSheet.value = true
+                    showChallengeBottomSheet.value = true
                 },
             horizontalArrangement = Arrangement.SpaceBetween,
         ) {
             Text(
-                text = "챌린지 (1)",
+                text = "챌린지 (${challengeData.value.size})",
                 fontSize = 22.sp,
             )
 
@@ -204,14 +213,27 @@ fun ProfileScreen(
                 contentDescription = "추가 아이콘"
             )
         }
+
+        Column (
+            modifier = Modifier
+                .height(320.dp)
+                .verticalScroll(rememberScrollState())
+        ) {
+            challengeData.value.forEach { challengeDTO ->
+                challengeRegistrationCard(
+                    challengeDTO = challengeDTO,
+                    height = 80.dp
+                )
+            }
+        }
     }
 
     if (showChallengeBottomSheet.value) {
         ChallengeBottomSheet(
             context = context,
             showBottomSheet = showChallengeBottomSheet,
-            sheetState = sheetState
+            sheetState = sheetState,
+            challengeDataTitle = challengeDataTitle
         )
     }
-
 }
