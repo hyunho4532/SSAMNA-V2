@@ -23,7 +23,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.ripple.rememberRipple
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
@@ -53,7 +52,10 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import coil.compose.AsyncImage
 import com.asetec.domain.model.state.Activate
 import com.asetec.domain.model.state.ActivateDTO
+import com.asetec.domain.model.state.Challenge
 import com.asetec.domain.model.user.User
+import com.asetec.presentation.R
+import com.asetec.presentation.component.dialog.ShowChallengeDialog
 import com.asetec.presentation.enum.CardType
 import com.asetec.presentation.viewmodel.ActivityLocationViewModel
 
@@ -367,6 +369,70 @@ fun activateCard(
                     .align(Alignment.End),
                 text = activateDTO!!.title,
             )
+        }
+    }
+}
+
+@Composable
+fun challengeCard(
+    challenge: Challenge,
+    height: Dp,
+    onChallengeIsPopup: (Int, Boolean) -> Unit
+) {
+
+    val screenWidth = LocalConfiguration.current.screenWidthDp.dp
+    val cardWidth = screenWidth * 0.9f
+
+    Card (
+        modifier = Modifier
+            .width(cardWidth)
+            .height(height)
+            .padding(top = 8.dp)
+            .clickable(
+                interactionSource = remember {
+                    MutableInteractionSource()
+                },
+                indication = rememberRipple(
+                    color = Color.Gray,
+                    bounded = true
+                )
+            ) {
+              onChallengeIsPopup(challenge.index, true)
+            },
+        colors = CardDefaults.cardColors(
+            containerColor = Color.White
+        ),
+        border = BorderStroke(2.dp, Color.Gray)
+    ) {
+        Box(
+            modifier = Modifier
+                .padding(top = 8.dp, start = 4.dp)
+        ) {
+            Column(
+                modifier = Modifier.fillMaxSize()
+            ) {
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.SpaceBetween
+                ) {
+                    Text(
+                        text = challenge.name,
+                        fontSize = 16.sp,
+                        fontWeight = FontWeight.Bold
+                    )
+
+                    Image(
+                        modifier = Modifier.padding(end = 4.dp),
+                        painter = painterResource(id = R.drawable.baseline_add_24),
+                        contentDescription = "추가 아이콘"
+                    )
+                }
+
+                Text(
+                    text = challenge.description,
+                    fontSize = 12.sp,
+                )
+            }
         }
     }
 }

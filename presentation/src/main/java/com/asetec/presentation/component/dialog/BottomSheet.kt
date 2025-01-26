@@ -17,6 +17,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
@@ -28,6 +29,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.asetec.presentation.component.tool.activateCard
+import com.asetec.presentation.component.tool.challengeCard
 import com.asetec.presentation.enum.CardType
 import com.asetec.presentation.viewmodel.JsonParseViewModel
 
@@ -167,6 +169,14 @@ fun ChallengeBottomSheet(
         mutableStateOf(false)
     }
 
+    val isChallengeIsPopup = remember {
+        mutableStateOf(false)
+    }
+
+    val challengeIndex  = remember {
+        mutableIntStateOf(0)
+    }
+
     LaunchedEffect(key1 = Unit) {
         if (jsonParseViewModel.challengeJsonData.isEmpty()) {
             jsonParseViewModel.activateJsonParse("challenge.json", "challenge")
@@ -182,11 +192,31 @@ fun ChallengeBottomSheet(
             onDismissRequest = { showBottomSheet.value = false },
             containerColor = Color.White
         ) {
-            jsonParseViewModel.challengeJsonData.forEach {
-                Text(
-                    text = it.name
-                )
+            Column (
+                modifier = Modifier
+                    .fillMaxSize()
+                    .padding(top = 16.dp),
+                verticalArrangement = Arrangement.Top,
+                horizontalAlignment = Alignment.CenterHorizontally
+            ) {
+                jsonParseViewModel.challengeJsonData.forEach { challenge ->
+                    challengeCard(
+                        challenge = challenge,
+                        height = 80.dp,
+                    ) { index, isPopup ->
+                        challengeIndex.intValue = index
+                        isChallengeIsPopup.value = isPopup
+                    }
+                }
             }
         }
+    }
+
+    if (isChallengeIsPopup.value) {
+        ShowChallengeDialog(
+            index = challengeIndex,
+            isChallengeIsPopup = isChallengeIsPopup,
+            challenge = jsonParseViewModel.challengeJsonData
+        )
     }
 }
