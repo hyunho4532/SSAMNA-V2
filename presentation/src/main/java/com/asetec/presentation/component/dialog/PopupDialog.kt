@@ -2,9 +2,12 @@ package com.asetec.presentation.component.dialog
 
 import android.annotation.SuppressLint
 import android.content.Context
+import android.widget.Space
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
@@ -163,7 +166,7 @@ fun ShowCompleteDialog(
                         .padding(top = 8.dp, end = 4.dp)
                 ) {
                     CustomButton(
-                        type = ButtonType.RunningStatus.INSERT,
+                        type = ButtonType.RunningStatus.InsertStatus.RUNNING,
                         width = 300.dp,
                         height = 32.dp,
                         text = "활동 저장!",
@@ -198,14 +201,62 @@ fun ShowChallengeDialog(
         Card(
             modifier = Modifier
                 .width(420.dp)
-                .height(560.dp)
+                .height(200.dp)
                 .verticalScroll(rememberScrollState()),
             shape = RoundedCornerShape(16.dp),
             colors = CardDefaults.cardColors(
                 containerColor = Color.White
             )
         ) {
-            Text(text = "챌린지 이름: " + challengeData.name)
+            Column(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(top = 12.dp),
+                horizontalAlignment = Alignment.CenterHorizontally
+            ) {
+                Text(
+                    text = "챌린저 등록!",
+                    fontSize = 18.sp,
+                    fontWeight = FontWeight.Bold
+                )
+
+                Row(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(top = 26.dp, start = 12.dp),
+                    horizontalArrangement = Arrangement.Start
+                ) {
+                    Text(
+                        text = "등록하실 챌린지는? ${challengeData.name}",
+                        fontSize = 14.sp,
+                    )
+                }
+
+                Box(
+                    modifier = Modifier
+                        .align(Alignment.Start)
+                        .padding(start = 12.dp, top = 4.dp)
+                ) {
+                    Text(
+                        text = challengeData.description,
+                        fontSize = 12.sp
+                    )
+                }
+
+                Spacer(width = 0.dp, height = 24.dp)
+
+                CustomButton(
+                    type = ButtonType.RunningStatus.InsertStatus.CHALLENGE,
+                    width = 240.dp,
+                    height = 40.dp,
+                    text = "챌린저 등록!",
+                    showIcon = false,
+                    backgroundColor = Color(0xFF5c9afa),
+                    context = null,
+                    shape = "Rectangle",
+                    data = challengeData
+                )
+            }
         }
     }
 }

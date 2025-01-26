@@ -20,9 +20,12 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
+import androidx.navigation.compose.rememberNavController
+import com.asetec.domain.model.state.Challenge
 import com.asetec.presentation.R
 import com.asetec.presentation.enum.ButtonType
 import com.asetec.presentation.viewmodel.ActivityLocationViewModel
+import com.asetec.presentation.viewmodel.ChallengeViewModel
 import com.asetec.presentation.viewmodel.SensorManagerViewModel
 
 @Composable
@@ -33,11 +36,13 @@ fun CustomButton(
     text: String,
     showIcon: Boolean,
     backgroundColor: Color,
-    navController: NavController?,
+    navController: NavController? = rememberNavController(),
     context: Context?,
-    shape: String,
+    shape: String = "Circle",
+    data: Challenge = Challenge(),
     sensorManagerViewModel: SensorManagerViewModel = hiltViewModel(),
-    activityLocationViewModel: ActivityLocationViewModel = hiltViewModel()
+    activityLocationViewModel: ActivityLocationViewModel = hiltViewModel(),
+    challengeViewModel: ChallengeViewModel = hiltViewModel()
 ) {
     Button(
         onClick = {
@@ -61,9 +66,14 @@ fun CustomButton(
                             Toast.makeText(context, "최소 100보 이상은 걸어야 합니다!", Toast.LENGTH_SHORT).show()
                         }
                     }
-                    ButtonType.RunningStatus.INSERT -> {
+                    ButtonType.RunningStatus.InsertStatus.RUNNING -> {
                         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
                             activityLocationViewModel.saveActivity()
+                        }
+                    }
+                    ButtonType.RunningStatus.InsertStatus.CHALLENGE -> {
+                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                            challengeViewModel.saveChallenge(data)
                         }
                     }
                     else -> {

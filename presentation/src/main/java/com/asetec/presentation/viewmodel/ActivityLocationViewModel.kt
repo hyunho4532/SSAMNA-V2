@@ -116,6 +116,10 @@ class ActivityLocationViewModel @Inject constructor(
         }
     }
 
+    fun saveChallenge() {
+
+    }
+
     suspend fun selectActivityFindById() {
         val googleId = sharedPreferences2.getString("id", "")
         val activateDTO = activateCase.selectActivityFindById(googleId!!)
